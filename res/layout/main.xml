@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              android:orientation="vertical"
+              android:background="@color/white"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent">
+    <RelativeLayout android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/red">
+        <com.example.material.MaterialMenuView
+                android:id="@+id/main_material_menu_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:mm_strokeWidth="1"
+                app:mm_color="@color/white"
+                app:mm_transformDuration="2000"
+                app:mm_scale="2"/>
+        <TextView android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:layout_toRightOf="@id/main_material_menu_button"
+                  android:text="BP"
+                  android:textStyle="bold"
+                  android:layout_centerInParent="true"
+                  android:textSize="45dp"/>
+        <ImageView android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:layout_alignParentRight="true"
+                   android:layout_centerInParent="true"
+                   android:background="@drawable/ic_action_line_chart"/>
+    </RelativeLayout>
+
+    <android.support.v4.widget.DrawerLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="left"
+            android:id="@+id/main_drawer_layout">
+        <RelativeLayout android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+
+            <FrameLayout android:layout_width="match_parent"
+                         android:layout_height="match_parent"
+                    android:id="@+id/main_frameLayout">
+                <ListView
+                        android:id="@+id/list"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="start"
+                        android:background="#ffffff"
+                        android:choiceMode="singleChoice"
+                        android:divider="@android:color/transparent"
+                        android:dividerHeight="0dp"/>
+            </FrameLayout>
+            <LinearLayout android:layout_width="wrap_content"
+                          android:layout_height="wrap_content"
+                          android:layout_above="@id/main_frameLayout"
+                          android:layout_alignParentRight="true"
+                          android:layout_alignParentBottom="true">
+                <ImageButton android:layout_width="wrap_content"
+                             android:layout_height="wrap_content"
+                             android:background="@drawable/ic_plus_button"
+                        />
+            </LinearLayout>
+        </RelativeLayout>
+        <ListView
+                android:id="@+id/slider_list"
+                android:layout_width="240dp"
+                android:layout_height="match_parent"
+                android:layout_gravity="start"
+                android:background="#ffffff"
+                android:choiceMode="singleChoice"
+                android:divider="@android:color/transparent"
+                android:dividerHeight="0dp"/>
+    </android.support.v4.widget.DrawerLayout>
+</LinearLayout>
+

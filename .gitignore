@@ -1,0 +1,9 @@
+/local.properties
+/build
+gradle
+.idea
+/assets
+/gen
+/bin
+/out
+/project.properties
