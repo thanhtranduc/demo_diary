@@ -2,9 +2,16 @@ package com.thanhtd.diaryApp;
 
 import android.app.Activity;
 import android.app.DatePickerDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.*;
+import com.thanhtd.diaryApp.adapter.Item;
+import com.thanhtd.diaryApp.data.DatabaseHelper;
+import com.thanhtd.diaryApp.data.SingletonHolder;
+import com.thanhtd.diaryApp.data.model.ItemModel;
+
+import java.sql.SQLException;
 
 /**
  * Created by a on 11/02/2015.
@@ -12,17 +19,19 @@ import android.widget.*;
 public class AddDiaryLog extends Activity
 {
     TextView tvTime;
+    Button btAdd;
     private int year;
     private int month;
     private int day;
+
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.add_diary_log);
-        NumberPicker npSystolic = (NumberPicker) findViewById(R.id.add_diary_log_np1);
-        NumberPicker npDiastolic = (NumberPicker) findViewById(R.id.add_diary_log_np2);
-        NumberPicker npPulse = (NumberPicker) findViewById(R.id.add_diary_log_np3);
+        final NumberPicker npSystolic = (NumberPicker) findViewById(R.id.add_diary_log_np1);
+        final NumberPicker npDiastolic = (NumberPicker) findViewById(R.id.add_diary_log_np2);
+        final NumberPicker npPulse = (NumberPicker) findViewById(R.id.add_diary_log_np3);
         npSystolic.setMinValue(0);
         npSystolic.setMaxValue(300);
         npSystolic.setWrapSelectorWheel(false);
@@ -78,18 +87,41 @@ public class AddDiaryLog extends Activity
             @Override
             public void onClick(View v)
             {
-                new DatePickerDialog(getApplication(), datePickerListener, year, month, day).show();
+                new DatePickerDialog(AddDiaryLog.this, datePickerListener, year, month, day).show();
+            }
+        });
+        btAdd = (Button) findViewById(R.id.add_diary_log_btAdd);
+        btAdd.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                Intent intent = new Intent(getApplicationContext(), DiaryApp.class);
+                Item item = new Item(String.valueOf(npSystolic.getValue()), String.valueOf(npDiastolic.getValue())
+                        , "", String.valueOf(npPulse.getValue()), tvTime.getText().toString());
+                try
+                {
+                    ItemModel itemModel = new ItemModel(item);
+                    SingletonHolder.getInstance().get(DatabaseHelper.class).getDaoItem().create(itemModel);
+                }
+                catch (SQLException e)
+                {
+                    e.printStackTrace();
+                }
+                startActivity(intent);
             }
         });
     }
 
 
     private DatePickerDialog.OnDateSetListener datePickerListener
-            = new DatePickerDialog.OnDateSetListener() {
+            = new DatePickerDialog.OnDateSetListener()
+    {
 
         // when dialog box is closed, below method will be called.
         public void onDateSet(DatePicker view, int selectedYear,
-                              int selectedMonth, int selectedDay) {
+                              int selectedMonth, int selectedDay)
+        {
             year = selectedYear;
             month = selectedMonth;
             day = selectedDay;

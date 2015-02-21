@@ -1,112 +1,115 @@
 <?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:background="@color/white"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                  android:orientation="vertical"
+                  android:background="@color/white"
+                  android:layout_width="match_parent"
+                  android:layout_height="match_parent">
+        <LinearLayout android:layout_width="match_parent"
+                      android:layout_height="wrap_content"
+                      android:weightSum="1">
+            <LinearLayout android:layout_width="wrap_content"
+                          android:layout_height="wrap_content"
+                          android:gravity="center"
+                          android:layout_weight="0.3">
 
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:orientation="vertical"
-              android:background="@color/white"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent">
-    <LinearLayout android:layout_width="match_parent"
+                <NumberPicker android:layout_width="wrap_content"
+                              android:layout_height="wrap_content"
+                              android:id="@+id/add_diary_log_np1">
+                </NumberPicker>
+            </LinearLayout>
+            <LinearLayout android:layout_width="wrap_content"
+                          android:layout_height="wrap_content"
+                          android:gravity="center"
+                          android:layout_weight="0.3">
+                <NumberPicker android:layout_width="wrap_content"
+                              android:layout_height="wrap_content"
+                              android:id="@+id/add_diary_log_np2">
+                </NumberPicker>
+            </LinearLayout>
+            <LinearLayout android:layout_width="wrap_content"
+                          android:layout_height="wrap_content"
+                          android:gravity="center"
+                          android:layout_weight="0.3">
+                <NumberPicker android:layout_width="wrap_content"
+                              android:layout_height="wrap_content"
+                              android:id="@+id/add_diary_log_np3">
+                </NumberPicker>
+            </LinearLayout>
+        </LinearLayout>
+        <LinearLayout android:layout_width="match_parent"
+                      android:layout_height="wrap_content"
+                      android:layout_marginLeft="20dp"
+                      android:layout_marginRight="70dp"
+                      android:orientation="vertical">
+            <TextView android:layout_width="wrap_content"
+                      android:layout_height="wrap_content"
+                      android:textColor="@color/black"
+                      android:text="PLACE OF MEASUREMENT:"/>
+            <Spinner android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
+                     android:minHeight="40dp"
+                     android:id="@+id/add_diary_log_spinner1">
+            </Spinner>
+        </LinearLayout>
+        <LinearLayout android:layout_width="match_parent"
+                      android:layout_height="wrap_content"
+                      android:layout_marginRight="70dp"
+                      android:layout_marginLeft="20dp"
+                      android:orientation="vertical">
+            <TextView android:layout_width="wrap_content"
+                      android:layout_height="wrap_content"
+                      android:textColor="@color/black"
+                      android:text="MEASUREMENT POSITION:"/>
+            <Spinner android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
+                     android:id="@+id/add_diary_log_spinner2">
+
+            </Spinner>
+        </LinearLayout>
+        <EditText android:layout_width="match_parent"
                   android:layout_height="wrap_content"
-                  android:weightSum="1">
-        <LinearLayout android:layout_width="wrap_content"
-                      android:layout_height="wrap_content"
-                      android:gravity="center"
-                      android:layout_weight="0.3">
-
-            <NumberPicker android:layout_width="wrap_content"
-                          android:layout_height="wrap_content"
-                          android:solidColor="@color/black"
-                          android:id="@+id/add_diary_log_np1">
-            </NumberPicker>
-        </LinearLayout>
-        <LinearLayout android:layout_width="wrap_content"
-                      android:layout_height="wrap_content"
-                      android:gravity="center"
-                      android:layout_weight="0.3">
-
-            <NumberPicker android:layout_width="wrap_content"
-                          android:layout_height="wrap_content"
-                          android:id="@+id/add_diary_log_np2">
-            </NumberPicker>
-        </LinearLayout>
-        <LinearLayout android:layout_width="wrap_content"
-                      android:layout_height="wrap_content"
-                      android:gravity="center"
-                      android:layout_weight="0.3">
-
-            <NumberPicker android:layout_width="wrap_content"
-                          android:layout_height="wrap_content"
-                          android:id="@+id/add_diary_log_np3">
-            </NumberPicker>
-        </LinearLayout>
-    </LinearLayout>
-    <LinearLayout android:layout_width="match_parent"
+                  android:hint="Enter a comment"
+                  android:layout_marginLeft="20dp"
+                  android:layout_marginRight="20dp"
+                  android:id="@+id/add_diary_log_etComment"/>
+        <CheckBox android:layout_width="wrap_content"
                   android:layout_height="wrap_content"
                   android:layout_marginLeft="20dp"
-                  android:layout_marginRight="70dp"
-                  android:orientation="vertical">
-        <TextView android:layout_width="wrap_content"
-                  android:layout_height="wrap_content"
-                  android:textColor="@color/black"
-                  android:text="PLACE OF MEASUREMENT:"/>
-        <Spinner android:layout_width="match_parent"
-                 android:layout_height="wrap_content"
-                 android:minHeight="40dp"
-                 android:id="@+id/add_diary_log_spinner1">
-        </Spinner>
-    </LinearLayout>
-    <LinearLayout android:layout_width="match_parent"
-                  android:layout_height="wrap_content"
-                  android:layout_marginRight="70dp"
-                  android:layout_marginLeft="20dp"
-                  android:orientation="vertical">
-        <TextView android:layout_width="wrap_content"
-                  android:layout_height="wrap_content"
-                  android:textColor="@color/black"
-                  android:text="MEASUREMENT POSITION:"/>
-        <Spinner android:layout_width="match_parent"
-                 android:layout_height="wrap_content"
-                 android:id="@+id/add_diary_log_spinner2">
-
-        </Spinner>
-    </LinearLayout>
-    <EditText android:layout_width="match_parent"
-              android:layout_height="wrap_content"
-              android:hint="Enter a comment"
-              android:layout_marginLeft="20dp"
-              android:layout_marginRight="20dp"
-              android:id="@+id/add_diary_log_etComment"/>
-    <CheckBox android:layout_width="wrap_content"
-              android:layout_height="wrap_content"
-              android:layout_marginLeft="20dp"
-              android:textSize="30dp"
-              android:textColor="@color/black"
-              android:text="cardiac arrhythmia"/>
-    <LinearLayout android:layout_width="match_parent"
-                  android:layout_height="wrap_content"
-                  android:weightSum="1">
-        <TextView android:layout_width="wrap_content"
-                  android:layout_height="wrap_content"
-                  android:gravity="center"
                   android:textSize="30dp"
-                  android:layout_weight="0.5"
                   android:textColor="@color/black"
-                  android:id="@+id/add_diary_log_tvTime"
-                  android:text="11:11 PM"/>
-        <TextView android:layout_width="wrap_content"
-                  android:layout_height="wrap_content"
-                  android:gravity="center"
-                  android:textColor="@color/black"
-                  android:textSize="30dp"
-                  android:layout_weight="0.5"
-                  android:id="@+id/add_diary_log_tvDate"
-                  android:text="month"/>
+                  android:text="cardiac arrhythmia"/>
+        <LinearLayout android:layout_width="match_parent"
+                      android:layout_height="wrap_content"
+                      android:weightSum="1">
+            <TextView android:layout_width="wrap_content"
+                      android:layout_height="wrap_content"
+                      android:gravity="center"
+                      android:textSize="30dp"
+                      android:layout_weight="0.5"
+                      android:textColor="@color/black"
+                      android:id="@+id/add_diary_log_tvTime"
+                      android:text="11:11 PM"/>
+            <TextView android:layout_width="wrap_content"
+                      android:layout_height="wrap_content"
+                      android:gravity="center"
+                      android:textColor="@color/black"
+                      android:textSize="30dp"
+                      android:layout_weight="0.5"
+                      android:id="@+id/add_diary_log_tvDate"
+                      android:text="month"/>
+        </LinearLayout>
+        <Button android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/add_diary_log_btAdd"
+                android:background="@color/blue"
+                android:textColor="@color/white"
+                android:textSize="40dp"
+                android:textStyle="bold"
+                android:text="ADD"/>
     </LinearLayout>
-    <Button android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/blue"
-            android:textColor="@color/white"
-            android:textSize="40dp"
-            android:textStyle="bold"
-            android:text="ADD"/>
-</LinearLayout>
+</ScrollView>

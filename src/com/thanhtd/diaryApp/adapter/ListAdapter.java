@@ -10,7 +10,6 @@ import com.thanhtd.diaryApp.R;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 /**
  * Created by a on 09/02/2015.
@@ -74,5 +73,15 @@ public class ListAdapter extends BaseAdapter
         TextView tvPulse;
         TextView tvTitleTime;
         TextView tvValueTime;
+    }
+
+    public List<Item> getGroups()
+    {
+        return groups;
+    }
+
+    public void setGroups(List<Item> groups)
+    {
+        this.groups = groups;
     }
 }
