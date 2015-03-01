@@ -1,19 +1,19 @@
 package com.thanhtd.diaryApp.adapter;
 
-import android.os.Parcel;
-import android.os.Parcelable;
 import com.thanhtd.diaryApp.data.model.ItemModel;
 
 /**
  * Created by a on 09/02/2015.
  */
-public class Item implements Parcelable
+public class Item
 {
     private String systol;
     private String diasol;
     private String level;
     private String pulse;
     private String time;
+    private String date;
+    private boolean isCardiac = false;
 
     public Item(ItemModel itemModel)
     {
@@ -22,24 +22,18 @@ public class Item implements Parcelable
         this.level = itemModel.getLevel();
         this.pulse = itemModel.getPulse();
         this.time = itemModel.getTime();
+        this.date = itemModel.getDate();
+        this.isCardiac = itemModel.getIsCardiac();
     }
 
-    public Item(String systol, String diasol, String level, String pulse, String time)
+    public Item(String systol, String diasol, String pulse, String time, String date, Boolean isCardiac)
     {
         this.systol = systol;
         this.diasol = diasol;
-        this.level = level;
         this.pulse = pulse;
         this.time = time;
-    }
-
-    public Item(Parcel parcel)
-    {
-        systol = parcel.readString();
-        diasol = parcel.readString();
-        level = parcel.readString();
-        pulse = parcel.readString();
-        time = parcel.readString();
+        this.date = date;
+        this.isCardiac = isCardiac;
     }
 
     public String getSystol()
@@ -92,34 +86,23 @@ public class Item implements Parcelable
         this.time = time;
     }
 
-    @Override
-    public int describeContents()
+    public String getDate()
     {
-        return 0;
+        return date;
     }
 
-    @Override
-    public void writeToParcel(Parcel dest, int flags)
+    public void setDate(String date)
     {
-        dest.writeString(systol);
-        dest.writeString(diasol);
-        dest.writeString(level);
-        dest.writeString(pulse);
-        dest.writeString(time);
+        this.date = date;
     }
 
-    public static final Creator<Item> CREATOR = new Creator<Item>()
+    public boolean isCardiac()
     {
-        @Override
-        public Item createFromParcel(Parcel source)
-        {
-            return new Item(source);
-        }
+        return isCardiac;
+    }
 
-        @Override
-        public Item[] newArray(int size)
-        {
-            return new Item[0];
-        }
-    };
+    public void setCardiac(boolean isCardiac)
+    {
+        this.isCardiac = isCardiac;
+    }
 }

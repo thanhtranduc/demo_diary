@@ -19,6 +19,7 @@
     <orderEntry type="library" name="support-v4-19.1.0" level="project" />
     <orderEntry type="library" name="ormlite-android-4.48" level="project" />
     <orderEntry type="library" name="ormlite-core-4.48" level="project" />
+    <orderEntry type="module" module-name="timepicker" />
   </component>
 </module>
 

@@ -5,6 +5,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import com.thanhtd.diaryApp.R;
 
@@ -56,6 +58,9 @@ public class ListAdapter extends BaseAdapter
             viewHolder.tvPulse = (TextView) convertView.findViewById(R.id.diary_item_tvPulse);
             viewHolder.tvTitleTime = (TextView) convertView.findViewById(R.id.diary_item_tvTitleTime);
             viewHolder.tvValueTime = (TextView) convertView.findViewById(R.id.diary_item_tvValueTime);
+            viewHolder.imStatus = (ImageView) convertView.findViewById(R.id.diary_item_imStatus);
+            viewHolder.ivCardiac = (ImageView) convertView.findViewById(R.id.diary_item_ivCardiac);
+            viewHolder.rlCardiac = (RelativeLayout) convertView.findViewById(R.id.diary_item_rlCardiac);
             convertView.setTag(viewHolder);
         }
         viewHolder = (ViewHolder) convertView.getTag();
@@ -63,6 +68,14 @@ public class ListAdapter extends BaseAdapter
         viewHolder.tvSystol.setText(item.getSystol());
         viewHolder.tvDiastol.setText(item.getDiasol());
         viewHolder.tvPulse.setText(item.getPulse());
+        viewHolder.tvTitleTime.setText(item.getDate());
+        viewHolder.tvValueTime.setText(item.getTime());
+        viewHolder.rlCardiac.setVisibility(item.isCardiac() ? View.VISIBLE : View.INVISIBLE);
+        if (item.getSystol() != null && item.getDiasol() != null)
+        {
+            viewHolder.imStatus.setBackgroundResource(convertToColor(item.getSystol(), item.getDiasol()));
+        }
+
         return convertView;
     }
 
@@ -70,9 +83,43 @@ public class ListAdapter extends BaseAdapter
     {
         TextView tvSystol;
         TextView tvDiastol;
+        ImageView imStatus;
         TextView tvPulse;
         TextView tvTitleTime;
         TextView tvValueTime;
+        ImageView ivCardiac;
+        RelativeLayout rlCardiac;
+    }
+
+    private int convertToColor(String systol, String diastol)
+    {
+        int systol_ = Integer.valueOf(systol);
+        int diastol_ = Integer.valueOf(diastol);
+        if (systol_ > 180 || diastol_ > 110)
+        {
+            return R.drawable.ic_heart_red;
+        }
+        else if ((systol_ > 160 && systol_ <= 180) || (diastol_ > 100 && diastol_ <= 110))
+        {
+            return R.drawable.ic_heart_orange;
+        }
+        else if ((systol_ > 140 && systol_ <= 160) || (diastol_ > 90 && diastol_ <= 100))
+        {
+            return R.drawable.ic_heart_gray;
+        }
+        else if ((systol_ > 120 && systol_ <= 140) || (diastol_ > 80 && diastol_ <= 90))
+        {
+            return R.drawable.ic_heart_yellow;
+        }
+        else if ((systol_ > 90 && systol_ <= 120) || (diastol_ > 60 && diastol_ <= 80))
+        {
+            return R.drawable.ic_heart_green;
+        }
+        else if (systol_ <= 90 || diastol_ <= 60)
+        {
+            return R.drawable.ic_heart_blue;
+        }
+        return -1;
     }
 
     public List<Item> getGroups()

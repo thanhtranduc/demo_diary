@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import com.example.material.MaterialMenuDrawable;
@@ -25,6 +26,7 @@ public class DiaryApp extends Activity
     private ListView materialMenu;
     private DrawerLayout drawerLayout;
     private ListView lvDiary;
+    private Boolean longClickHere = false;
 
     @Override
     public void onCreate(Bundle savedInstanceState)
@@ -82,6 +84,22 @@ public class DiaryApp extends Activity
             {
                 Intent intent = new Intent(getApplicationContext(), AddDiaryLog.class);
                 startActivity(intent);
+            }
+        });
+        lvDiary.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener()
+        {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id)
+            {
+                return false;
+            }
+        });
+        lvDiary.setOnItemClickListener(new AdapterView.OnItemClickListener()
+        {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id)
+            {
+
             }
         });
     }

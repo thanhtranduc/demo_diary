@@ -20,6 +20,10 @@ public class ItemModel
     String pulse;
     @DatabaseField
     String time;
+    @DatabaseField
+    String date;
+    @DatabaseField
+    Boolean isCardiac;
 
     public ItemModel()
     {
@@ -32,6 +36,8 @@ public class ItemModel
         this.level = item.getLevel();
         this.pulse = item.getPulse();
         this.time = item.getTime();
+        this.date = item.getDate();
+        this.isCardiac = item.isCardiac();
     }
 
     public String getSystol()
@@ -82,5 +88,25 @@ public class ItemModel
     public void setTime(String time)
     {
         this.time = time;
+    }
+
+    public String getDate()
+    {
+        return date;
+    }
+
+    public void setDate(String date)
+    {
+        this.date = date;
+    }
+
+    public Boolean getIsCardiac()
+    {
+        return isCardiac;
+    }
+
+    public void setIsCardiac(Boolean isCardiac)
+    {
+        this.isCardiac = isCardiac;
     }
 }

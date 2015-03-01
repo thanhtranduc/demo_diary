@@ -1,24 +1,28 @@
 package com.thanhtd.diaryApp;
 
-import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.FragmentActivity;
 import android.view.View;
 import android.widget.*;
 import com.thanhtd.diaryApp.adapter.Item;
 import com.thanhtd.diaryApp.data.DatabaseHelper;
 import com.thanhtd.diaryApp.data.SingletonHolder;
 import com.thanhtd.diaryApp.data.model.ItemModel;
+import com.zenkun.datetimepicker.time.RadialPickerLayout;
+import com.zenkun.datetimepicker.time.TimePickerDialog;
 
 import java.sql.SQLException;
+import java.util.Calendar;
 
 /**
  * Created by a on 11/02/2015.
  */
-public class AddDiaryLog extends Activity
+public class AddDiaryLog extends FragmentActivity
 {
     TextView tvTime;
+    TextView tvDate;
     Button btAdd;
     private int year;
     private int month;
@@ -82,14 +86,33 @@ public class AddDiaryLog extends Activity
         spinner2.setAdapter(adapter2);
 
         tvTime = (TextView) findViewById(R.id.add_diary_log_tvTime);
+        final Calendar calendar = Calendar.getInstance();
+        tvTime.setText(calendar.get(Calendar.HOUR) + ":" + calendar.get(Calendar.MINUTE) + (calendar.get(Calendar.AM_PM) == 1 ? " AM" : " PM"));
+
         tvTime.setOnClickListener(new View.OnClickListener()
         {
             @Override
             public void onClick(View v)
             {
-                new DatePickerDialog(AddDiaryLog.this, datePickerListener, year, month, day).show();
+                TimePickerDialog.newInstance(timeSetListener, calendar.get(Calendar.HOUR_OF_DAY), calendar.get(Calendar.MINUTE), false)
+                        .show(getSupportFragmentManager(), "");
             }
         });
+        tvDate = (TextView) findViewById(R.id.add_diary_log_tvDate);
+        tvDate.setText(calendar.get(Calendar.MONTH) + "/" + calendar.get(Calendar.DAY_OF_MONTH) + "/" + calendar.get(Calendar.YEAR));
+
+        tvDate.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                new DatePickerDialog(AddDiaryLog.this, datePickerListener, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH),
+                        calendar.get(Calendar.DAY_OF_MONTH)).show();
+            }
+        });
+
+        final CheckBox cbCardiac = (CheckBox) findViewById(R.id.add_diary_log_cbCardiac);
+
         btAdd = (Button) findViewById(R.id.add_diary_log_btAdd);
         btAdd.setOnClickListener(new View.OnClickListener()
         {
@@ -97,8 +120,8 @@ public class AddDiaryLog extends Activity
             public void onClick(View v)
             {
                 Intent intent = new Intent(getApplicationContext(), DiaryApp.class);
-                Item item = new Item(String.valueOf(npSystolic.getValue()), String.valueOf(npDiastolic.getValue())
-                        , "", String.valueOf(npPulse.getValue()), tvTime.getText().toString());
+                Item item = new Item(String.valueOf(npSystolic.getValue()), String.valueOf(npDiastolic.getValue()),
+                        String.valueOf(npPulse.getValue()), tvTime.getText().toString(), tvDate.getText().toString(), cbCardiac.isChecked());
                 try
                 {
                     ItemModel itemModel = new ItemModel(item);
@@ -113,26 +136,28 @@ public class AddDiaryLog extends Activity
         });
     }
 
+    TimePickerDialog.OnTimeSetListener timeSetListener = new TimePickerDialog.OnTimeSetListener()
+    {
+        @Override
+        public void onTimeSet(RadialPickerLayout view, int hourOfDay, int minute)
+        {
+            tvTime.setText(hourOfDay + ":" + minute + " " + (view.getIsCurrentlyAmOrPm() == 0 ? "AM" : "PM"));
+        }
+    };
 
     private DatePickerDialog.OnDateSetListener datePickerListener
             = new DatePickerDialog.OnDateSetListener()
     {
-
-        // when dialog box is closed, below method will be called.
         public void onDateSet(DatePicker view, int selectedYear,
                               int selectedMonth, int selectedDay)
         {
             year = selectedYear;
             month = selectedMonth;
             day = selectedDay;
-
-            // set selected date into textview
-            tvTime.setText(new StringBuilder().append(month + 1)
-                    .append("-").append(day).append("-").append(year)
+//            String nameOfMonth = AddDiaryLog.this.getResources().getStringArray(R.array.month_names)[month];
+            tvDate.setText(new StringBuilder().append(month + 1)
+                    .append("/").append(day).append("/").append(year)
                     .append(" "));
-
-            // set selected date into datepicker also
-
         }
     };
 }

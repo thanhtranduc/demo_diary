@@ -15,4 +15,5 @@
         </activity>
         <activity android:name=".AddDiaryLog"/>
     </application>
+    <uses-permission android:name="android.permission.VIBRATE"/>
 </manifest>
