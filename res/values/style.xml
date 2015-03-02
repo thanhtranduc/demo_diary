@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="vertical_line">
+        <item name="android:layout_width">fill_parent</item>
+        <item name="android:layout_height">1dip</item>
+        <item name="android:background">@color/trending_blue</item>
+    </style>
+
+    <style name="vertical_line_advices">
+        <item name="android:layout_width">fill_parent</item>
+        <item name="android:layout_height">.5dip</item>
+        <item name="android:background">#FF9933</item>
+    </style>
+</resources>

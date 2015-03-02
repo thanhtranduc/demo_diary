@@ -18,6 +18,7 @@
                 app:mm_scale="1"/>
         <TextView android:layout_width="wrap_content"
                   android:layout_height="wrap_content"
+                  android:id="@+id/main_tvTitle"
                   android:layout_toRightOf="@id/main_material_menu_button"
                   android:text="BP"
                   android:textStyle="bold"
