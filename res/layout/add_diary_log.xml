@@ -61,7 +61,6 @@
                         android:id="@+id/add_diary_log_spinner1"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
                         style="@style/spinner_style"
                         android:spinnerMode="dropdown"
                         android:background="@null"
@@ -92,7 +91,6 @@
                         android:id="@+id/add_diary_log_spinner2"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
                         style="@style/H8"
                         android:spinnerMode="dropdown"
                         android:background="@null"
@@ -105,9 +103,6 @@
                            android:layout_centerVertical="true"
                            android:id="@+id/imageView"/>
             </RelativeLayout>
-            <!--<Spinner android:layout_width="match_parent"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:id="@+id/add_diary_log_spinner2"/>-->
 
         </LinearLayout>
         <EditText android:layout_width="match_parent"

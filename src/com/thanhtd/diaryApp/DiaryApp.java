@@ -6,11 +6,11 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.widget.DrawerLayout;
+import android.view.ActionMode;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ImageButton;
-import android.widget.ListView;
-import android.widget.TextView;
+import android.widget.*;
 import com.example.material.MaterialMenuDrawable;
 import com.example.material.MaterialMenuView;
 import com.thanhtd.diaryApp.adapter.Item;
@@ -25,6 +25,7 @@ import com.thanhtd.diaryApp.fragment.AdviceFragment;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 public class DiaryApp extends FragmentActivity
 {
@@ -32,7 +33,8 @@ public class DiaryApp extends FragmentActivity
     private ListView materialMenu;
     private DrawerLayout drawerLayout;
     private ListView lvDiary;
-    private Boolean longClickHere = false;
+    ListAdapter adapter = new ListAdapter(this);
+    ;
     TextView tvTitle;
 
     @Override
@@ -123,8 +125,7 @@ public class DiaryApp extends FragmentActivity
             }
         });
 
-        ListAdapter adapter = new ListAdapter(this);
-        DatabaseHelper databaseHelper = new DatabaseHelper(this, "diary.db");
+        final DatabaseHelper databaseHelper = new DatabaseHelper(this, "diary.db");
         SingletonHolder.getInstance().add(databaseHelper);
 
         lvDiary = (ListView) findViewById(R.id.main_lvDiary);
@@ -167,8 +168,88 @@ public class DiaryApp extends FragmentActivity
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id)
             {
-
+                lvDiary.setItemChecked(position, !adapter.isPositionChecked(position));
             }
+        });
+
+        lvDiary.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE_MODAL);
+        lvDiary.setMultiChoiceModeListener(new AbsListView.MultiChoiceModeListener()
+        {
+            private int nr = 0;
+
+            @Override
+            public void onItemCheckedStateChanged(ActionMode mode, int position, long id, boolean checked)
+            {
+                if (checked)
+                {
+                    nr++;
+                    adapter.setNewSelection(position, checked);
+                }
+                else
+                {
+                    nr--;
+                    adapter.removeSelection(position);
+                }
+                mode.setTitle(nr + " rows selected!");
+            }
+
+            @Override
+            public boolean onCreateActionMode(ActionMode mode, Menu menu)
+            {
+                MenuInflater inflater = getMenuInflater();
+                inflater.inflate(R.menu.cabselection_menu, menu);
+                return true;
+            }
+
+            @Override
+            public boolean onPrepareActionMode(ActionMode mode, Menu menu)
+            {
+                return false;
+            }
+
+            @Override
+            public boolean onActionItemClicked(ActionMode mode, android.view.MenuItem item)
+            {
+                StringBuilder sb = new StringBuilder();
+                Set<Integer> positions = adapter.getCurrentCheckedPosition();
+                for (Integer pos : positions)
+                {
+                    sb.append(" " + pos + ",");
+                }
+                switch (item.getItemId())
+                {
+                    case R.id.edit_entry:
+
+                        break;
+                    case R.id.delete_entry:
+                        for (Integer position : positions)
+                        {
+                            adapter.getGroups().remove(position);
+                            try
+                            {
+                                databaseHelper.getDaoItem().deleteById(adapter.getGroups().get(position).getId());
+                            }
+                            catch (SQLException e)
+                            {
+                                e.printStackTrace();
+                            }
+                        }
+                        break;
+                    case R.id.finish_it:
+                        nr = 0;
+                        adapter.clearSelection();
+                        mode.finish();
+                }
+                return false;
+            }
+
+            @Override
+            public void onDestroyActionMode(ActionMode mode)
+            {
+                nr = 0;
+                adapter.clearSelection();
+            }
+
         });
     }
 

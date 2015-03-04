@@ -10,6 +10,8 @@ import com.thanhtd.diaryApp.adapter.Item;
 @DatabaseTable(tableName = "Item")
 public class ItemModel
 {
+    @DatabaseField(generatedId = true, columnName = "_id", allowGeneratedIdInsert = true)
+    Long _id;
     @DatabaseField
     String systol;
     @DatabaseField
@@ -38,6 +40,16 @@ public class ItemModel
         this.time = item.getTime();
         this.date = item.getDate();
         this.isCardiac = item.isCardiac();
+    }
+
+    public Long get_id()
+    {
+        return _id;
+    }
+
+    public void set_id(Long _id)
+    {
+        this._id = _id;
     }
 
     public String getSystol()

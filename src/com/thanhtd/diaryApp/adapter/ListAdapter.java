@@ -11,7 +11,9 @@ import android.widget.TextView;
 import com.thanhtd.diaryApp.R;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Created by a on 09/02/2015.
@@ -20,6 +22,8 @@ public class ListAdapter extends BaseAdapter
 {
     private List<Item> groups = new ArrayList<Item>();
     private Context context;
+
+    private HashMap<Integer, Boolean> mSelection = new HashMap<Integer, Boolean>();
 
     public ListAdapter(Context context)
     {
@@ -130,5 +134,36 @@ public class ListAdapter extends BaseAdapter
     public void setGroups(List<Item> groups)
     {
         this.groups = groups;
+    }
+
+
+    //----------------------------
+    public void setNewSelection(int position, boolean value)
+    {
+        mSelection.put(position, value);
+        notifyDataSetChanged();
+    }
+
+    public boolean isPositionChecked(int position)
+    {
+        Boolean result = mSelection.get(position);
+        return result == null ? false : result;
+    }
+
+    public Set<Integer> getCurrentCheckedPosition()
+    {
+        return mSelection.keySet();
+    }
+
+    public void removeSelection(int position)
+    {
+        mSelection.remove(position);
+        notifyDataSetChanged();
+    }
+
+    public void clearSelection()
+    {
+        mSelection = new HashMap<Integer, Boolean>();
+        notifyDataSetChanged();
     }
 }

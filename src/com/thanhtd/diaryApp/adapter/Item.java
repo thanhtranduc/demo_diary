@@ -7,6 +7,7 @@ import com.thanhtd.diaryApp.data.model.ItemModel;
  */
 public class Item
 {
+    private Long id;
     private String systol;
     private String diasol;
     private String level;
@@ -17,6 +18,7 @@ public class Item
 
     public Item(ItemModel itemModel)
     {
+        this.id = itemModel.get_id();
         this.systol = itemModel.getSystol();
         this.diasol = itemModel.getDiasol();
         this.level = itemModel.getLevel();
@@ -34,6 +36,16 @@ public class Item
         this.time = time;
         this.date = date;
         this.isCardiac = isCardiac;
+    }
+
+    public Long getId()
+    {
+        return id;
+    }
+
+    public void setId(Long id)
+    {
+        this.id = id;
     }
 
     public String getSystol()
