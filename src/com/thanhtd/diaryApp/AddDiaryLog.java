@@ -2,8 +2,10 @@ package com.thanhtd.diaryApp;
 
 import android.app.DatePickerDialog;
 import android.content.Intent;
+import android.graphics.Paint;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.*;
 import com.thanhtd.diaryApp.adapter.Item;
@@ -13,6 +15,7 @@ import com.thanhtd.diaryApp.data.model.ItemModel;
 import com.zenkun.datetimepicker.time.RadialPickerLayout;
 import com.zenkun.datetimepicker.time.TimePickerDialog;
 
+import java.lang.reflect.Field;
 import java.sql.SQLException;
 import java.util.Calendar;
 
@@ -73,11 +76,14 @@ public class AddDiaryLog extends FragmentActivity
         });
 
         final Spinner spinner1 = (Spinner) findViewById(R.id.add_diary_log_spinner1);
-        ArrayAdapter<CharSequence> adapter1 = ArrayAdapter.createFromResource(this,
-                R.array.place_array, R.layout.simple_spinner_item);
-        adapter1.setDropDownViewResource(R.layout.simple_spinner_dropdown_item);
-        spinner1.setAdapter(adapter1);
 
+        String[] data = getResources().getStringArray(R.array.place_array);
+        ArrayAdapter adapter = new ArrayAdapter(this, R.layout.simple_spinner_item, R.id.style_spinner, data);
+        adapter.setDropDownViewResource(R.layout.simple_spinner_dropdown_item);
+        spinner1.setAdapter(adapter);
+        setNumberPickerTextColor(npSystolic, getResources().getColor(R.color.black));
+        setNumberPickerTextColor(npDiastolic, getResources().getColor(R.color.black));
+        setNumberPickerTextColor(npPulse, getResources().getColor(R.color.black));
 
         Spinner spinner2 = (Spinner) findViewById(R.id.add_diary_log_spinner2);
         ArrayAdapter<CharSequence> adapter2 = ArrayAdapter.createFromResource(this,
@@ -160,4 +166,39 @@ public class AddDiaryLog extends FragmentActivity
                     .append(" "));
         }
     };
+
+    public static boolean setNumberPickerTextColor(NumberPicker numberPicker, int color)
+    {
+        final int count = numberPicker.getChildCount();
+        for (int i = 0; i < count; i++)
+        {
+            View child = numberPicker.getChildAt(i);
+            if (child instanceof EditText)
+            {
+                try
+                {
+                    Field selectorWheelPaintField = numberPicker.getClass()
+                            .getDeclaredField("mSelectorWheelPaint");
+                    selectorWheelPaintField.setAccessible(true);
+                    ((Paint) selectorWheelPaintField.get(numberPicker)).setColor(color);
+                    ((EditText) child).setTextColor(color);
+                    numberPicker.invalidate();
+                    return true;
+                }
+                catch (NoSuchFieldException e)
+                {
+                    Log.w("setNumberPickerTextColor", e);
+                }
+                catch (IllegalAccessException e)
+                {
+                    Log.w("setNumberPickerTextColor", e);
+                }
+                catch (IllegalArgumentException e)
+                {
+                    Log.w("setNumberPickerTextColor", e);
+                }
+            }
+        }
+        return false;
+    }
 }

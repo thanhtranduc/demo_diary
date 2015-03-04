@@ -50,11 +50,30 @@
                       android:layout_height="wrap_content"
                       android:textColor="@color/black"
                       android:text="PLACE OF MEASUREMENT:"/>
-            <Spinner android:layout_width="match_parent"
-                     android:layout_height="wrap_content"
-                     android:minHeight="40dp"
-                     android:id="@+id/add_diary_log_spinner1">
-            </Spinner>
+            <!--<Spinner android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:background="@drawable/icon_arrow_dropdown"-->
+            <!--android:id="@+id/add_diary_log_spinner1"/>-->
+            <RelativeLayout android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+                <Spinner
+                        android:id="@+id/add_diary_log_spinner1"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        style="@style/spinner_style"
+                        android:spinnerMode="dropdown"
+                        android:background="@null"
+                        android:layout_alignParentRight="true"
+                        android:layout_alignParentEnd="true"/>
+                <ImageView android:layout_width="wrap_content"
+                           android:layout_height="wrap_content"
+                           android:background="@drawable/icon_arrow_dropdown"
+                           android:layout_alignParentRight="true"
+                           android:layout_centerVertical="true"
+                           android:id="@+id/imageView"/>
+            </RelativeLayout>
         </LinearLayout>
         <LinearLayout android:layout_width="match_parent"
                       android:layout_height="wrap_content"
@@ -65,15 +84,36 @@
                       android:layout_height="wrap_content"
                       android:textColor="@color/black"
                       android:text="MEASUREMENT POSITION:"/>
-            <Spinner android:layout_width="match_parent"
-                     android:layout_height="wrap_content"
-                     android:id="@+id/add_diary_log_spinner2">
 
-            </Spinner>
+            <RelativeLayout android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+                <Spinner
+                        android:id="@+id/add_diary_log_spinner2"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        style="@style/H8"
+                        android:spinnerMode="dropdown"
+                        android:background="@null"
+                        android:layout_alignParentRight="true"
+                        android:layout_alignParentEnd="true"/>
+                <ImageView android:layout_width="wrap_content"
+                           android:layout_height="wrap_content"
+                           android:background="@drawable/icon_arrow_dropdown"
+                           android:layout_alignParentRight="true"
+                           android:layout_centerVertical="true"
+                           android:id="@+id/imageView"/>
+            </RelativeLayout>
+            <!--<Spinner android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:id="@+id/add_diary_log_spinner2"/>-->
+
         </LinearLayout>
         <EditText android:layout_width="match_parent"
                   android:layout_height="wrap_content"
                   android:hint="Enter a comment"
+                  android:textColor="@color/black"
                   android:layout_marginLeft="20dp"
                   android:layout_marginRight="20dp"
                   android:id="@+id/add_diary_log_etComment"/>
