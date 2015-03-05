@@ -12,8 +12,10 @@ public class Item
     private String diasol;
     private String level;
     private String pulse;
-    private String time;
-    private String date;
+    private String timeView;
+    private Long time;
+    private String dateView;
+    private Long date;
     private boolean isCardiac = false;
 
     public Item(ItemModel itemModel)
@@ -33,8 +35,8 @@ public class Item
         this.systol = systol;
         this.diasol = diasol;
         this.pulse = pulse;
-        this.time = time;
-        this.date = date;
+        this.timeView = time;
+        this.dateView = date;
         this.isCardiac = isCardiac;
     }
 
@@ -88,24 +90,44 @@ public class Item
         this.pulse = pulse;
     }
 
-    public String getTime()
+    public Long getTime()
     {
         return time;
     }
 
-    public void setTime(String time)
+    public void setTime(Long time)
     {
         this.time = time;
     }
 
-    public String getDate()
+    public Long getDate()
     {
         return date;
     }
 
-    public void setDate(String date)
+    public void setDate(Long date)
     {
         this.date = date;
+    }
+
+    public String getTimeView()
+    {
+        return timeView;
+    }
+
+    public void setTimeView(String timeView)
+    {
+        this.timeView = timeView;
+    }
+
+    public String getDateView()
+    {
+        return dateView;
+    }
+
+    public void setDateView(String dateView)
+    {
+        this.dateView = dateView;
     }
 
     public boolean isCardiac()

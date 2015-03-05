@@ -1,13 +1,11 @@
 package com.thanhtd.diaryApp.adapter;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
-import android.widget.ImageView;
-import android.widget.RelativeLayout;
-import android.widget.TextView;
+import android.widget.*;
 import com.thanhtd.diaryApp.R;
 
 import java.util.ArrayList;
@@ -58,6 +56,7 @@ public class ListAdapter extends BaseAdapter
             LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             convertView = inflater.inflate(R.layout.diary_item, null);
             viewHolder.tvSystol = (TextView) convertView.findViewById(R.id.diary_item_tvSystol);
+            viewHolder.llRow = (LinearLayout) convertView.findViewById(R.id.diary_item_llRow);
             viewHolder.tvDiastol = (TextView) convertView.findViewById(R.id.diary_item_tvDiasol);
             viewHolder.tvPulse = (TextView) convertView.findViewById(R.id.diary_item_tvPulse);
             viewHolder.tvTitleTime = (TextView) convertView.findViewById(R.id.diary_item_tvTitleTime);
@@ -72,12 +71,20 @@ public class ListAdapter extends BaseAdapter
         viewHolder.tvSystol.setText(item.getSystol());
         viewHolder.tvDiastol.setText(item.getDiasol());
         viewHolder.tvPulse.setText(item.getPulse());
-        viewHolder.tvTitleTime.setText(item.getDate());
-        viewHolder.tvValueTime.setText(item.getTime());
+        viewHolder.tvTitleTime.setText(item.getDateView());
+        viewHolder.tvValueTime.setText(item.getTimeView());
         viewHolder.rlCardiac.setVisibility(item.isCardiac() ? View.VISIBLE : View.INVISIBLE);
         if (item.getSystol() != null && item.getDiasol() != null)
         {
             viewHolder.imStatus.setBackgroundResource(convertToColor(item.getSystol(), item.getDiasol()));
+        }
+        if (mSelection.get(position) != null)
+        {
+            viewHolder.llRow.setBackgroundColor(Color.GRAY);
+        }
+        else
+        {
+            viewHolder.llRow.setBackgroundColor(Color.WHITE);
         }
 
         return convertView;
@@ -93,6 +100,7 @@ public class ListAdapter extends BaseAdapter
         TextView tvValueTime;
         ImageView ivCardiac;
         RelativeLayout rlCardiac;
+        LinearLayout llRow;
     }
 
     private int convertToColor(String systol, String diastol)

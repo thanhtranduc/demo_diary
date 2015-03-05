@@ -34,7 +34,6 @@ public class DiaryApp extends FragmentActivity
     private DrawerLayout drawerLayout;
     private ListView lvDiary;
     ListAdapter adapter = new ListAdapter(this);
-    ;
     TextView tvTitle;
 
     @Override
@@ -168,7 +167,14 @@ public class DiaryApp extends FragmentActivity
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id)
             {
-                lvDiary.setItemChecked(position, !adapter.isPositionChecked(position));
+                if (adapter.getCurrentCheckedPosition().size() != 0)
+                {
+                    lvDiary.setItemChecked(position, !adapter.isPositionChecked(position));
+                }
+                else
+                {
+                    //todo
+                }
             }
         });
 
@@ -176,6 +182,7 @@ public class DiaryApp extends FragmentActivity
         lvDiary.setMultiChoiceModeListener(new AbsListView.MultiChoiceModeListener()
         {
             private int nr = 0;
+            Menu menu;
 
             @Override
             public void onItemCheckedStateChanged(ActionMode mode, int position, long id, boolean checked)
@@ -190,7 +197,16 @@ public class DiaryApp extends FragmentActivity
                     nr--;
                     adapter.removeSelection(position);
                 }
-                mode.setTitle(nr + " rows selected!");
+                if (nr == 1 && menu != null)
+                {
+                    menu.findItem(R.id.edit_entry).setVisible(true);
+                }
+                else
+                {
+                    menu.findItem(R.id.edit_entry).setVisible(false);
+
+                }
+                mode.setTitle(nr + " rows selected");
             }
 
             @Override
@@ -198,6 +214,48 @@ public class DiaryApp extends FragmentActivity
             {
                 MenuInflater inflater = getMenuInflater();
                 inflater.inflate(R.menu.cabselection_menu, menu);
+                this.menu = menu;
+                menu.findItem(R.id.edit_entry).setOnMenuItemClickListener(new android.view.MenuItem.OnMenuItemClickListener()
+                {
+                    @Override
+                    public boolean onMenuItemClick(android.view.MenuItem item)
+                    {
+                        Intent intent = new Intent(getApplicationContext(), AddDiaryLog.class);
+                        Set<Integer> integers = adapter.getCurrentCheckedPosition();
+                        Integer integer = null;
+                        for (Integer position : integers)
+                        {
+                            integer = position;
+                        }
+                        Item item1 = (Item) adapter.getItem(integer);
+                        intent.putExtra("id", item1.getId());
+                        startActivity(intent);
+                        return true;
+                    }
+                });
+                menu.findItem(R.id.delete_entry).setOnMenuItemClickListener(new android.view.MenuItem.OnMenuItemClickListener()
+                {
+                    @Override
+                    public boolean onMenuItemClick(android.view.MenuItem item)
+                    {
+                        Set<Integer> positions = adapter.getCurrentCheckedPosition();
+                        for (Integer position : positions)
+                        {
+                            adapter.getGroups().remove(position);
+                            try
+                            {
+                                databaseHelper.getDaoItem().deleteById(adapter.getGroups().get(position).getId());
+                            }
+                            catch (SQLException e)
+                            {
+                                e.printStackTrace();
+                            }
+                            adapter.notifyDataSetChanged();
+                        }
+                        return true;
+                    }
+                });
+
                 return true;
             }
 
@@ -233,12 +291,9 @@ public class DiaryApp extends FragmentActivity
                             {
                                 e.printStackTrace();
                             }
+                            adapter.notifyDataSetChanged();
                         }
                         break;
-                    case R.id.finish_it:
-                        nr = 0;
-                        adapter.clearSelection();
-                        mode.finish();
                 }
                 return false;
             }
@@ -261,7 +316,6 @@ public class DiaryApp extends FragmentActivity
         MenuItem app1 = new MenuItem("App 1", -1);
         MenuItem app2 = new MenuItem("App 2", -1);
         MenuItem setting = new MenuItem("Settings", R.drawable.ic_action_settings);
-        MenuItem rate = new MenuItem("Rate Us", -1);
         List<MenuItem> groups = new ArrayList<MenuItem>();
         groups.add(BP);
         groups.add(advises);
@@ -269,7 +323,6 @@ public class DiaryApp extends FragmentActivity
         groups.add(app2);
         groups.add(reminders);
         groups.add(setting);
-        groups.add(rate);
         materialMenu.setAdapter(new MenuListAdapter(groups, DiaryApp.this));
     }
 

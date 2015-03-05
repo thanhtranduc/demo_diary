@@ -21,11 +21,17 @@ public class ItemModel
     @DatabaseField
     String pulse;
     @DatabaseField
-    String time;
+    Long time;
     @DatabaseField
-    String date;
+    Long date;
     @DatabaseField
     Boolean isCardiac;
+    @DatabaseField
+    String placeMeasurement;
+    @DatabaseField
+    String positionMeasurement;
+    @DatabaseField
+    String comment;
 
     public ItemModel()
     {
@@ -92,22 +98,22 @@ public class ItemModel
         this.pulse = pulse;
     }
 
-    public String getTime()
+    public Long getTime()
     {
         return time;
     }
 
-    public void setTime(String time)
+    public void setTime(Long time)
     {
         this.time = time;
     }
 
-    public String getDate()
+    public Long getDate()
     {
         return date;
     }
 
-    public void setDate(String date)
+    public void setDate(Long date)
     {
         this.date = date;
     }
@@ -120,5 +126,35 @@ public class ItemModel
     public void setIsCardiac(Boolean isCardiac)
     {
         this.isCardiac = isCardiac;
+    }
+
+    public String getPlaceMeasurement()
+    {
+        return placeMeasurement;
+    }
+
+    public void setPlaceMeasurement(String placeMeasurement)
+    {
+        this.placeMeasurement = placeMeasurement;
+    }
+
+    public String getPositionMeasurement()
+    {
+        return positionMeasurement;
+    }
+
+    public void setPositionMeasurement(String positionMeasurement)
+    {
+        this.positionMeasurement = positionMeasurement;
+    }
+
+    public String getComment()
+    {
+        return comment;
+    }
+
+    public void setComment(String comment)
+    {
+        this.comment = comment;
     }
 }

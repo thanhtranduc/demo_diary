@@ -17,7 +17,10 @@ import com.zenkun.datetimepicker.time.TimePickerDialog;
 
 import java.lang.reflect.Field;
 import java.sql.SQLException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 
 /**
  * Created by a on 11/02/2015.
@@ -30,6 +33,7 @@ public class AddDiaryLog extends FragmentActivity
     private int year;
     private int month;
     private int day;
+    ItemModel itemModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -92,6 +96,95 @@ public class AddDiaryLog extends FragmentActivity
         spinner2.setAdapter(adapter2);
 
         tvTime = (TextView) findViewById(R.id.add_diary_log_tvTime);
+        tvDate = (TextView) findViewById(R.id.add_diary_log_tvDate);
+        btAdd = (Button) findViewById(R.id.add_diary_log_btAdd);
+        final CheckBox cbCardiac = (CheckBox) findViewById(R.id.add_diary_log_cbCardiac);
+        final EditText etComment = (EditText) findViewById(R.id.add_diary_log_etComment);
+
+        if (getIntent().getExtras() != null && getIntent().getExtras().get("id") != null)
+        {
+            //todo
+            DatabaseHelper databaseHelper = new DatabaseHelper(this, "diary.db");
+            try
+            {
+                itemModel = databaseHelper.getDaoItem().queryForId((Long) getIntent().getExtras().get("id"));
+                npSystolic.setValue(Integer.parseInt(itemModel.getSystol()));
+                npDiastolic.setValue(Integer.parseInt(itemModel.getDiasol()));
+                npPulse.setValue(Integer.parseInt(itemModel.getPulse()));
+
+                final Date time = new Date(itemModel.getTime());
+                DateFormat formatter = new SimpleDateFormat("hh:mm a");
+                tvTime.setText(formatter.format(time));
+
+
+                final Date date = new Date(itemModel.getDate());
+                SimpleDateFormat df2 = new SimpleDateFormat("MM/dd/yyyy");
+                tvDate.setText(df2.format(date));
+                spinner1.setPrompt(itemModel.getPlaceMeasurement());
+                spinner2.setPrompt(itemModel.getPositionMeasurement());
+                cbCardiac.setChecked(itemModel.getIsCardiac());
+                etComment.setText(itemModel.getComment());
+
+                tvTime.setOnClickListener(new View.OnClickListener()
+                {
+                    @Override
+                    public void onClick(View v)
+                    {
+                        TimePickerDialog.newInstance(timeSetListener, time.getHours(), time.getMinutes(), false)
+                                .show(getSupportFragmentManager(), "");
+                    }
+                });
+
+                tvDate.setOnClickListener(new View.OnClickListener()
+                {
+                    @Override
+                    public void onClick(View v)
+                    {
+                        new DatePickerDialog(AddDiaryLog.this, datePickerListener, date.getYear(), date.getMonth(),
+                                date.getDay()).show();
+                    }
+                });
+
+                btAdd.setText("Edit Record");
+                btAdd.setOnClickListener(new View.OnClickListener()
+                {
+                    @Override
+                    public void onClick(View v)
+                    {
+                        Intent intent = new Intent(getApplicationContext(), DiaryApp.class);
+                        Item item = new Item(String.valueOf(npSystolic.getValue()), String.valueOf(npDiastolic.getValue()),
+                                String.valueOf(npPulse.getValue()), tvTime.getText().toString(), tvDate.getText().toString(), cbCardiac.isChecked());
+                        try
+                        {
+                            ItemModel itemModel_ = new ItemModel(item);
+                            itemModel_.setTime(itemModel.getTime());
+                            itemModel_.setDate(itemModel_.getDate());
+                            SingletonHolder.getInstance().get(DatabaseHelper.class).getDaoItem().updateId(itemModel_, itemModel_.get_id());
+                        }
+                        catch (SQLException e)
+                        {
+                            e.printStackTrace();
+                        }
+                        startActivity(intent);
+                    }
+                });
+
+            }
+            catch (SQLException e)
+            {
+                e.printStackTrace();
+            }
+        }
+        else
+        {
+            itemModel = new ItemModel();
+            btAdd.setText("ADD");
+            setupNewDiary(npSystolic, npDiastolic, npPulse, cbCardiac, itemModel);
+        }
+    }
+
+    private void setupNewDiary(final NumberPicker npSystolic, final NumberPicker npDiastolic, final NumberPicker npPulse, final CheckBox cbCardiac, final ItemModel itemModel)
+    {
         final Calendar calendar = Calendar.getInstance();
         tvTime.setText(calendar.get(Calendar.HOUR) + ":" + calendar.get(Calendar.MINUTE) + (calendar.get(Calendar.AM_PM) == 1 ? " AM" : " PM"));
 
@@ -104,7 +197,7 @@ public class AddDiaryLog extends FragmentActivity
                         .show(getSupportFragmentManager(), "");
             }
         });
-        tvDate = (TextView) findViewById(R.id.add_diary_log_tvDate);
+
         tvDate.setText(calendar.get(Calendar.MONTH) + "/" + calendar.get(Calendar.DAY_OF_MONTH) + "/" + calendar.get(Calendar.YEAR));
 
         tvDate.setOnClickListener(new View.OnClickListener()
@@ -117,9 +210,6 @@ public class AddDiaryLog extends FragmentActivity
             }
         });
 
-        final CheckBox cbCardiac = (CheckBox) findViewById(R.id.add_diary_log_cbCardiac);
-
-        btAdd = (Button) findViewById(R.id.add_diary_log_btAdd);
         btAdd.setOnClickListener(new View.OnClickListener()
         {
             @Override
@@ -130,8 +220,10 @@ public class AddDiaryLog extends FragmentActivity
                         String.valueOf(npPulse.getValue()), tvTime.getText().toString(), tvDate.getText().toString(), cbCardiac.isChecked());
                 try
                 {
-                    ItemModel itemModel = new ItemModel(item);
-                    SingletonHolder.getInstance().get(DatabaseHelper.class).getDaoItem().create(itemModel);
+                    ItemModel itemModel_ = new ItemModel(item);
+                    itemModel_.setTime(itemModel.getTime() != null ? itemModel.getTime() : Long.valueOf(calendar.getTimeInMillis()));
+                    itemModel_.setDate(itemModel_.getDate() != null ? itemModel.getDate() : Long.valueOf(calendar.getTimeInMillis()));
+                    SingletonHolder.getInstance().get(DatabaseHelper.class).getDaoItem().create(itemModel_);
                 }
                 catch (SQLException e)
                 {
@@ -147,6 +239,11 @@ public class AddDiaryLog extends FragmentActivity
         @Override
         public void onTimeSet(RadialPickerLayout view, int hourOfDay, int minute)
         {
+            Calendar calendar = Calendar.getInstance();
+            calendar.set(Calendar.HOUR_OF_DAY, hourOfDay);
+            calendar.set(Calendar.MINUTE, minute);
+            calendar.set(Calendar.AM_PM, view.getIsCurrentlyAmOrPm());
+            itemModel.setTime(calendar.getTimeInMillis());
             tvTime.setText(hourOfDay + ":" + minute + " " + (view.getIsCurrentlyAmOrPm() == 0 ? "AM" : "PM"));
         }
     };
@@ -160,7 +257,11 @@ public class AddDiaryLog extends FragmentActivity
             year = selectedYear;
             month = selectedMonth;
             day = selectedDay;
-//            String nameOfMonth = AddDiaryLog.this.getResources().getStringArray(R.array.month_names)[month];
+            Calendar calendar = Calendar.getInstance();
+            calendar.set(Calendar.YEAR, year);
+            calendar.set(Calendar.MONTH, month);
+            calendar.set(Calendar.DAY_OF_MONTH, day);
+            itemModel.setDate(calendar.getTimeInMillis());
             tvDate.setText(new StringBuilder().append(month + 1)
                     .append("/").append(day).append("/").append(year)
                     .append(" "));
