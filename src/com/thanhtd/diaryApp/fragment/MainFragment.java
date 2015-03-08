@@ -150,7 +150,6 @@ public class MainFragment extends Fragment
                         Set<Integer> positions = adapter.getCurrentCheckedPosition();
                         for (Integer position : positions)
                         {
-                            adapter.getGroups().remove(position);
                             try
                             {
                                 databaseHelper.getDaoItem().deleteById(adapter.getGroups().get(position).getId());
@@ -159,12 +158,14 @@ public class MainFragment extends Fragment
                             {
                                 e.printStackTrace();
                             }
+                            adapter.getGroups().remove(adapter.getGroups().get(position));
                             adapter.notifyDataSetChanged();
                         }
+                        adapter.clearSelection();
+                        nr = 0;
                         return true;
                     }
                 });
-
                 return true;
             }
 
