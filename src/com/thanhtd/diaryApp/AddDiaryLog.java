@@ -206,7 +206,7 @@ public class AddDiaryLog extends FragmentActivity
             }
         });
 
-        tvDate.setText(calendar.get(Calendar.MONTH) + "/" + calendar.get(Calendar.DAY_OF_MONTH) + "/" + calendar.get(Calendar.YEAR));
+        tvDate.setText(calendar.get(Calendar.MONTH) + 1 + "/" + calendar.get(Calendar.DAY_OF_MONTH) + "/" + calendar.get(Calendar.YEAR));
 
         tvDate.setOnClickListener(new View.OnClickListener()
         {
@@ -233,7 +233,7 @@ public class AddDiaryLog extends FragmentActivity
                     itemModel_.setPlaceMeasurement(spinner1.getSelectedItemId());
                     itemModel_.setPositionMeasurement(spinner2.getSelectedItemId());
                     itemModel_.setTime(itemModel.getTime() != null ? itemModel.getTime() : Long.valueOf(calendar.getTimeInMillis()));
-                    itemModel_.setDate(itemModel_.getDate() != null ? itemModel.getDate() : Long.valueOf(calendar.getTimeInMillis()));
+                    itemModel_.setDate(itemModel.getDate() != null ? itemModel.getDate() : Long.valueOf(calendar.getTimeInMillis()));
                     SingletonHolder.getInstance().get(DatabaseHelper.class).getDaoItem().create(itemModel_);
                 }
                 catch (SQLException e)
