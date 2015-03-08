@@ -27,9 +27,9 @@ public class ItemModel
     @DatabaseField
     Boolean isCardiac;
     @DatabaseField
-    String placeMeasurement;
+    Long placeMeasurement;
     @DatabaseField
-    String positionMeasurement;
+    Long positionMeasurement;
     @DatabaseField
     String comment;
 
@@ -45,6 +45,7 @@ public class ItemModel
         this.pulse = item.getPulse();
         this.time = item.getTime();
         this.date = item.getDate();
+        this.comment = item.getComment();
         this.isCardiac = item.isCardiac();
     }
 
@@ -128,22 +129,22 @@ public class ItemModel
         this.isCardiac = isCardiac;
     }
 
-    public String getPlaceMeasurement()
+    public Long getPlaceMeasurement()
     {
         return placeMeasurement;
     }
 
-    public void setPlaceMeasurement(String placeMeasurement)
+    public void setPlaceMeasurement(Long placeMeasurement)
     {
         this.placeMeasurement = placeMeasurement;
     }
 
-    public String getPositionMeasurement()
+    public Long getPositionMeasurement()
     {
         return positionMeasurement;
     }
 
-    public void setPositionMeasurement(String positionMeasurement)
+    public void setPositionMeasurement(Long positionMeasurement)
     {
         this.positionMeasurement = positionMeasurement;
     }

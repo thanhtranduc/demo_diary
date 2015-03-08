@@ -17,6 +17,7 @@ public class Item
     private String dateView;
     private Long date;
     private boolean isCardiac = false;
+    private String comment;
 
     public Item(ItemModel itemModel)
     {
@@ -30,13 +31,17 @@ public class Item
         this.isCardiac = itemModel.getIsCardiac();
     }
 
-    public Item(String systol, String diasol, String pulse, String time, String date, Boolean isCardiac)
+    public Item(String systol, String diasol, String pulse, String time, String date, String comment, Boolean isCardiac)
     {
         this.systol = systol;
         this.diasol = diasol;
         this.pulse = pulse;
         this.timeView = time;
         this.dateView = date;
+        if (comment != null)
+        {
+            this.comment = comment;
+        }
         this.isCardiac = isCardiac;
     }
 
@@ -128,6 +133,16 @@ public class Item
     public void setDateView(String dateView)
     {
         this.dateView = dateView;
+    }
+
+    public String getComment()
+    {
+        return comment;
+    }
+
+    public void setComment(String comment)
+    {
+        this.comment = comment;
     }
 
     public boolean isCardiac()

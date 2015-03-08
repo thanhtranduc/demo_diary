@@ -8,10 +8,9 @@ import android.view.ViewGroup;
 import android.widget.*;
 import com.thanhtd.diaryApp.R;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Set;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 /**
  * Created by a on 09/02/2015.
@@ -71,8 +70,16 @@ public class ListAdapter extends BaseAdapter
         viewHolder.tvSystol.setText(item.getSystol());
         viewHolder.tvDiastol.setText(item.getDiasol());
         viewHolder.tvPulse.setText(item.getPulse());
-        viewHolder.tvTitleTime.setText(item.getDateView());
-        viewHolder.tvValueTime.setText(item.getTimeView());
+
+        final Date time = new Date(item.getTime());
+        DateFormat formatter = new SimpleDateFormat("hh:mm a");
+        viewHolder.tvValueTime.setText(formatter.format(time));
+
+
+        final Date date = new Date(item.getDate());
+        SimpleDateFormat df2 = new SimpleDateFormat("MM/dd/yyyy");
+        viewHolder.tvTitleTime.setText(df2.format(date));
+
         viewHolder.rlCardiac.setVisibility(item.isCardiac() ? View.VISIBLE : View.INVISIBLE);
         if (item.getSystol() != null && item.getDiasol() != null)
         {

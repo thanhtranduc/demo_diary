@@ -34,6 +34,9 @@ public class AddDiaryLog extends FragmentActivity
     private int month;
     private int day;
     ItemModel itemModel;
+    EditText etComment;
+    Spinner spinner1;
+    Spinner spinner2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -51,7 +54,7 @@ public class AddDiaryLog extends FragmentActivity
             @Override
             public void onValueChange(NumberPicker picker, int oldVal, int newVal)
             {
-
+                npSystolic.setValue(newVal);
             }
         });
 
@@ -63,7 +66,7 @@ public class AddDiaryLog extends FragmentActivity
             @Override
             public void onValueChange(NumberPicker picker, int oldVal, int newVal)
             {
-
+                npDiastolic.setValue(newVal);
             }
         });
 
@@ -75,11 +78,11 @@ public class AddDiaryLog extends FragmentActivity
             @Override
             public void onValueChange(NumberPicker picker, int oldVal, int newVal)
             {
-
+                npPulse.setValue(newVal);
             }
         });
 
-        final Spinner spinner1 = (Spinner) findViewById(R.id.add_diary_log_spinner1);
+        spinner1 = (Spinner) findViewById(R.id.add_diary_log_spinner1);
 
         String[] data = getResources().getStringArray(R.array.place_array);
         ArrayAdapter adapter = new ArrayAdapter(this, R.layout.simple_spinner_item, R.id.style_spinner, data);
@@ -89,7 +92,7 @@ public class AddDiaryLog extends FragmentActivity
         setNumberPickerTextColor(npDiastolic, getResources().getColor(R.color.black));
         setNumberPickerTextColor(npPulse, getResources().getColor(R.color.black));
 
-        Spinner spinner2 = (Spinner) findViewById(R.id.add_diary_log_spinner2);
+        spinner2 = (Spinner) findViewById(R.id.add_diary_log_spinner2);
         ArrayAdapter<CharSequence> adapter2 = ArrayAdapter.createFromResource(this,
                 R.array.position_array, R.layout.simple_spinner_item);
         adapter2.setDropDownViewResource(R.layout.simple_spinner_dropdown_item);
@@ -99,7 +102,7 @@ public class AddDiaryLog extends FragmentActivity
         tvDate = (TextView) findViewById(R.id.add_diary_log_tvDate);
         btAdd = (Button) findViewById(R.id.add_diary_log_btAdd);
         final CheckBox cbCardiac = (CheckBox) findViewById(R.id.add_diary_log_cbCardiac);
-        final EditText etComment = (EditText) findViewById(R.id.add_diary_log_etComment);
+        etComment = (EditText) findViewById(R.id.add_diary_log_etComment);
 
         if (getIntent().getExtras() != null && getIntent().getExtras().get("id") != null)
         {
@@ -120,8 +123,8 @@ public class AddDiaryLog extends FragmentActivity
                 final Date date = new Date(itemModel.getDate());
                 SimpleDateFormat df2 = new SimpleDateFormat("MM/dd/yyyy");
                 tvDate.setText(df2.format(date));
-                spinner1.setPrompt(itemModel.getPlaceMeasurement());
-                spinner2.setPrompt(itemModel.getPositionMeasurement());
+                spinner1.setSelection(itemModel.getPlaceMeasurement().intValue());
+                spinner2.setSelection(itemModel.getPositionMeasurement().intValue());
                 cbCardiac.setChecked(itemModel.getIsCardiac());
                 etComment.setText(itemModel.getComment());
 
@@ -152,14 +155,19 @@ public class AddDiaryLog extends FragmentActivity
                     public void onClick(View v)
                     {
                         Intent intent = new Intent(getApplicationContext(), DiaryApp.class);
-                        Item item = new Item(String.valueOf(npSystolic.getValue()), String.valueOf(npDiastolic.getValue()),
-                                String.valueOf(npPulse.getValue()), tvTime.getText().toString(), tvDate.getText().toString(), cbCardiac.isChecked());
                         try
                         {
-                            ItemModel itemModel_ = new ItemModel(item);
-                            itemModel_.setTime(itemModel.getTime());
-                            itemModel_.setDate(itemModel_.getDate());
-                            SingletonHolder.getInstance().get(DatabaseHelper.class).getDaoItem().updateId(itemModel_, itemModel_.get_id());
+                            if (etComment.getText() != null)
+                            {
+                                itemModel.setComment(etComment.getText().toString());
+                            }
+                            itemModel.setIsCardiac(cbCardiac.isChecked());
+                            itemModel.setSystol(String.valueOf(npSystolic.getValue()));
+                            itemModel.setDiasol(String.valueOf(npDiastolic.getValue()));
+                            itemModel.setPulse(String.valueOf(npPulse.getValue()));
+                            itemModel.setPlaceMeasurement(spinner1.getSelectedItemId());
+                            itemModel.setPositionMeasurement(spinner2.getSelectedItemId());
+                            SingletonHolder.getInstance().get(DatabaseHelper.class).getDaoItem().update(itemModel);
                         }
                         catch (SQLException e)
                         {
@@ -217,10 +225,13 @@ public class AddDiaryLog extends FragmentActivity
             {
                 Intent intent = new Intent(getApplicationContext(), DiaryApp.class);
                 Item item = new Item(String.valueOf(npSystolic.getValue()), String.valueOf(npDiastolic.getValue()),
-                        String.valueOf(npPulse.getValue()), tvTime.getText().toString(), tvDate.getText().toString(), cbCardiac.isChecked());
+                        String.valueOf(npPulse.getValue()), tvTime.getText().toString(), tvDate.getText().toString(),
+                        String.valueOf(etComment.getText()), cbCardiac.isChecked());
                 try
                 {
                     ItemModel itemModel_ = new ItemModel(item);
+                    itemModel_.setPlaceMeasurement(spinner1.getSelectedItemId());
+                    itemModel_.setPositionMeasurement(spinner2.getSelectedItemId());
                     itemModel_.setTime(itemModel.getTime() != null ? itemModel.getTime() : Long.valueOf(calendar.getTimeInMillis()));
                     itemModel_.setDate(itemModel_.getDate() != null ? itemModel.getDate() : Long.valueOf(calendar.getTimeInMillis()));
                     SingletonHolder.getInstance().get(DatabaseHelper.class).getDaoItem().create(itemModel_);

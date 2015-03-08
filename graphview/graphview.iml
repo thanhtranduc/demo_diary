@@ -3,6 +3,7 @@
   <component name="FacetManager">
     <facet type="android" name="Android">
       <configuration>
+        <option name="LIBRARY_PROJECT" value="true" />
         <option name="UPDATE_PROPERTY_FILES" value="true" />
       </configuration>
     </facet>
@@ -13,14 +14,9 @@
       <sourceFolder url="file://$MODULE_DIR$/src" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/gen" isTestSource="false" generated="true" />
     </content>
-    <orderEntry type="jdk" jdkName="Android API 19 Platform" jdkType="Android SDK" />
+    <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="module" module-name="material" />
     <orderEntry type="library" name="support-v4-19.1.0" level="project" />
-    <orderEntry type="library" name="ormlite-android-4.48" level="project" />
-    <orderEntry type="library" name="ormlite-core-4.48" level="project" />
-    <orderEntry type="module" module-name="timepicker" />
-    <orderEntry type="module" module-name="graphview" />
   </component>
 </module>
 

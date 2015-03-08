@@ -11,6 +11,12 @@
         <item name="android:layout_height">.5dip</item>
         <item name="android:background">#FF9933</item>
     </style>
+
+    <style name="vertical_line_dialog">
+        <item name="android:layout_width">fill_parent</item>
+        <item name="android:layout_height">.5dip</item>
+        <item name="android:background">@color/gray</item>
+    </style>
     <style name="H10">  <!-- Bold, 47px, Black #000000, 0 0 0 -->
         <item name="android:textStyle">bold</item>
         <item name="android:textSize">16dp</item>
