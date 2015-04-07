@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.util.Log;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.*;
 import com.thanhtd.diaryApp.adapter.Item;
 import com.thanhtd.diaryApp.data.DatabaseHelper;
@@ -42,6 +43,7 @@ public class AddDiaryLog extends FragmentActivity
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.add_diary_log);
         final NumberPicker npSystolic = (NumberPicker) findViewById(R.id.add_diary_log_np1);
         final NumberPicker npDiastolic = (NumberPicker) findViewById(R.id.add_diary_log_np2);
@@ -57,6 +59,7 @@ public class AddDiaryLog extends FragmentActivity
                 npSystolic.setValue(newVal);
             }
         });
+        npSystolic.setValue(120);
 
         npDiastolic.setMinValue(0);
         npDiastolic.setMaxValue(300);
@@ -69,10 +72,12 @@ public class AddDiaryLog extends FragmentActivity
                 npDiastolic.setValue(newVal);
             }
         });
+        npDiastolic.setValue(80);
 
         npPulse.setMinValue(0);
         npPulse.setMaxValue(300);
         npPulse.setWrapSelectorWheel(false);
+
         npPulse.setOnValueChangedListener(new NumberPicker.OnValueChangeListener()
         {
             @Override
@@ -81,7 +86,7 @@ public class AddDiaryLog extends FragmentActivity
                 npPulse.setValue(newVal);
             }
         });
-
+        npPulse.setValue(70);
         spinner1 = (Spinner) findViewById(R.id.add_diary_log_spinner1);
 
         String[] data = getResources().getStringArray(R.array.place_array);
@@ -103,7 +108,9 @@ public class AddDiaryLog extends FragmentActivity
         btAdd = (Button) findViewById(R.id.add_diary_log_btAdd);
         final CheckBox cbCardiac = (CheckBox) findViewById(R.id.add_diary_log_cbCardiac);
         etComment = (EditText) findViewById(R.id.add_diary_log_etComment);
-
+        getWindow().setSoftInputMode(
+                WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN
+        );
         if (getIntent().getExtras() != null && getIntent().getExtras().get("id") != null)
         {
             //todo

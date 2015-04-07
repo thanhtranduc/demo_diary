@@ -12,6 +12,7 @@
                 android:id="@+id/main_material_menu_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
                 app:mm_strokeWidth="1"
                 app:mm_color="@color/white"
                 app:mm_transformDuration="2000"
@@ -23,7 +24,7 @@
                   android:text="BP"
                   android:textStyle="bold"
                   android:layout_centerInParent="true"
-                  android:textSize="20dp"/>
+                  android:textSize="25dp"/>
         <ImageView android:layout_width="wrap_content"
                    android:layout_height="wrap_content"
                    android:id="@+id/main_ivGraph"
@@ -44,6 +45,13 @@
                          android:layout_height="match_parent"
                          android:id="@+id/main_frameLayout">
             </FrameLayout>
+            <TextView android:layout_width="wrap_content"
+                      android:layout_height="wrap_content"
+                      android:id="@+id/main_tvHintAdd"
+                      android:textSize="30dp"
+                      android:layout_centerInParent="true"
+                      android:gravity="center"
+                      android:text="You haven't added anything, press '+' Button"/>
             <LinearLayout android:layout_width="wrap_content"
                           android:layout_height="wrap_content"
                           android:layout_above="@id/main_frameLayout"

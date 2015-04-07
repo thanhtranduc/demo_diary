@@ -21,6 +21,7 @@
                           android:layout_height="wrap_content"
                           android:textColor="@color/black"
                           android:layout_marginBottom="5dp"
+                          android:textSize="24dp"
                           android:text="Systolic"/>
                 <NumberPicker android:layout_width="wrap_content"
                               android:layout_height="wrap_content"
@@ -36,6 +37,7 @@
                           android:layout_height="wrap_content"
                           android:textColor="@color/black"
                           android:layout_marginBottom="5dp"
+                          android:textSize="24dp"
                           android:text="Diastolic"/>
                 <NumberPicker android:layout_width="wrap_content"
                               android:layout_height="wrap_content"
@@ -49,6 +51,7 @@
                           android:layout_weight="0.3">
                 <TextView android:layout_width="wrap_content"
                           android:layout_height="wrap_content"
+                          android:textSize="24dp"
                           android:textColor="@color/black"
                           android:layout_marginBottom="5dp"
                           android:text="Pulse"/>
@@ -66,6 +69,7 @@
             <TextView android:layout_width="wrap_content"
                       android:layout_height="wrap_content"
                       android:textColor="@color/black"
+                      android:textSize="20dp"
                       android:text="PLACE OF MEASUREMENT:"/>
             <!--<Spinner android:layout_width="match_parent"-->
             <!--android:layout_height="wrap_content"-->
@@ -91,6 +95,12 @@
                            android:id="@+id/imageView"/>
             </RelativeLayout>
         </LinearLayout>
+        <View android:background="@color/gray"
+              android:layout_width="match_parent"
+              android:layout_marginRight="70dp"
+              android:layout_marginLeft="20dp"
+              android:layout_marginBottom="5dp"
+              android:layout_height="1dp"/>
         <LinearLayout android:layout_width="match_parent"
                       android:layout_height="wrap_content"
                       android:layout_marginRight="70dp"
@@ -99,6 +109,7 @@
             <TextView android:layout_width="wrap_content"
                       android:layout_height="wrap_content"
                       android:textColor="@color/black"
+                      android:textSize="20dp"
                       android:text="MEASUREMENT POSITION:"/>
 
             <RelativeLayout android:layout_width="match_parent"
@@ -122,9 +133,18 @@
             </RelativeLayout>
 
         </LinearLayout>
+        <View android:background="@color/gray"
+              android:layout_width="match_parent"
+              android:layout_marginRight="70dp"
+              android:layout_marginLeft="20dp"
+              android:layout_marginTop="5dp"
+              android:layout_marginBottom="5dp"
+              android:layout_height="1dp"/>
         <EditText android:layout_width="match_parent"
                   android:layout_height="wrap_content"
                   android:hint="Enter a comment"
+                  android:textSize="25dp"
+                  android:background="@null"
                   android:textColor="@color/black"
                   android:layout_marginLeft="20dp"
                   android:layout_marginRight="20dp"

@@ -29,6 +29,8 @@ public class MainFragment extends Fragment
     private ListView lvDiary;
 
     public ListAdapter adapter;
+    List<ItemModel> list;
+    List<Item> groups;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
@@ -38,7 +40,7 @@ public class MainFragment extends Fragment
         SingletonHolder.getInstance().add(databaseHelper);
         adapter = new ListAdapter(getActivity());
         lvDiary = (ListView) view.findViewById(R.id.main_lvDiary);
-        List<ItemModel> list = null;
+
         try
         {
             list = databaseHelper.getDaoItem().queryForAll();
@@ -48,7 +50,11 @@ public class MainFragment extends Fragment
             e.printStackTrace();
         }
 
-        List<Item> groups = new ArrayList<Item>();
+        if (list != null && list.size() > 0)
+        {
+            getActivity().findViewById(R.id.main_tvHintAdd).setVisibility(View.GONE);
+        }
+        groups = new ArrayList<Item>();
         for (ItemModel itemModel : list)
         {
             groups.add(new Item(itemModel));
@@ -148,7 +154,7 @@ public class MainFragment extends Fragment
                     public boolean onMenuItemClick(android.view.MenuItem item)
                     {
                         Set<Integer> positions = adapter.getCurrentCheckedPosition();
-                        for (Integer position : positions)
+                        for (int position : positions)
                         {
                             try
                             {
@@ -158,9 +164,22 @@ public class MainFragment extends Fragment
                             {
                                 e.printStackTrace();
                             }
-                            adapter.getGroups().remove(adapter.getGroups().get(position));
-                            adapter.notifyDataSetChanged();
+
                         }
+                        try
+                        {
+                            list = databaseHelper.getDaoItem().queryForAll();
+                            groups.clear();
+                            for (ItemModel itemModel : list)
+                            {
+                                groups.add(new Item(itemModel));
+                            }
+                        }
+                        catch (SQLException e)
+                        {
+                            e.printStackTrace();
+                        }
+                        adapter.notifyDataSetChanged();
                         adapter.clearSelection();
                         nr = 0;
                         return true;

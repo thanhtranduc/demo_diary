@@ -22,17 +22,19 @@ import java.util.Date;
  */
 public class EditDiaryDialogFragment extends DialogFragment
 {
+    ItemModel itemModel;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {
-        View rootView = inflater.inflate(R.layout.edit_diaray_dialog, container, false);
+        final View rootView = inflater.inflate(R.layout.edit_diaray_dialog, container, false);
         getDialog().getWindow().requestFeature(Window.FEATURE_NO_TITLE);
         TextView tvDelete = (TextView) rootView.findViewById(R.id.edit_dialog_delete);
         TextView tvEdit = (TextView) rootView.findViewById(R.id.edit_dialog_edit);
         TextView tvOk = (TextView) rootView.findViewById(R.id.edit_dialog_ok);
         final DatabaseHelper databaseHelper = new DatabaseHelper(getActivity(), "diary.db");
         final Long id = (Long) getArguments().get("id");
-        ItemModel itemModel = null;
+        getActivity().findViewById(R.id.main_tvHintAdd).setVisibility(View.GONE);
         try
         {
             itemModel = databaseHelper.getDaoItem().queryForId(id);
@@ -41,7 +43,7 @@ public class EditDiaryDialogFragment extends DialogFragment
         {
             e.printStackTrace();
         }
-
+        final int position = (Integer) getArguments().get("position");
         tvDelete.setOnClickListener(new View.OnClickListener()
         {
             @Override
@@ -49,7 +51,6 @@ public class EditDiaryDialogFragment extends DialogFragment
             {
                 try
                 {
-                    Integer position = (Integer) getArguments().get("position");
                     databaseHelper.getDaoItem().deleteById(id);
                     ((DiaryApp) getActivity()).mainFragment.adapter.getGroups().remove(position);
                     ((DiaryApp) getActivity()).mainFragment.adapter.notifyDataSetChanged();
@@ -80,6 +81,18 @@ public class EditDiaryDialogFragment extends DialogFragment
             @Override
             public void onClick(View v)
             {
+                ((DiaryApp) getActivity()).mainFragment.adapter.getGroups()
+                        .get(position).setCardiac(((CheckBox) rootView.findViewById(R.id.cbCardiac)).isChecked());
+                itemModel.setIsCardiac(((CheckBox) rootView.findViewById(R.id.cbCardiac)).isChecked());
+                try
+                {
+                    databaseHelper.getDaoItem().update(itemModel);
+                }
+                catch (SQLException e)
+                {
+                    e.printStackTrace();
+                }
+                ((DiaryApp) getActivity()).mainFragment.adapter.notifyDataSetChanged();
                 dismiss();
             }
         });
