@@ -43,8 +43,7 @@
                       android:layout_centerHorizontal="true"
                       android:gravity="center_horizontal"
                       android:textColor="@color/black"
-                      android:text="To take at least two BP measurements, in the sitting position, spaced 1-2 min
-                       apart, and additional measurements if the first two are quite different. Consider the average BP if deemed approriate"/>
+                      android:text="@string/instruction"/>
             <View
                     android:id="@+id/line0"
                     style="@style/vertical_line_advices"
@@ -155,8 +154,7 @@
                       android:layout_centerHorizontal="true"
                       android:gravity="center_horizontal"
                       android:textColor="@color/black"
-                      android:text="Recommended to reduce body weight - a BMI of less than 25, waist circumference of
-                      less than 102cm in men, in women less than 88cm"/>
+                      android:text="@string/weight"/>
             <View
                     android:id="@+id/line2"
                     style="@style/vertical_line_advices"
@@ -212,7 +210,7 @@
                       android:layout_centerHorizontal="true"
                       android:gravity="center_horizontal"
                       android:textColor="@color/black"
-                      android:text="Recommended to reduce body weight - a BMI of less than 25, waist circumference of less than 102cm in men, in women less than 88cm"/>
+                      android:text="@string/mean"/>
             <View
                     android:id="@+id/line3"
                     style="@style/vertical_line_advices"

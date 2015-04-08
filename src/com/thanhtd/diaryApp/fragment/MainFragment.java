@@ -36,6 +36,7 @@ public class MainFragment extends Fragment
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {
         View view = inflater.inflate(R.layout.main_fragment, container, false);
+        getActivity().findViewById(R.id.main_ivGraph).setVisibility(View.VISIBLE);
         final DatabaseHelper databaseHelper = new DatabaseHelper(getActivity(), "diary.db");
         SingletonHolder.getInstance().add(databaseHelper);
         adapter = new ListAdapter(getActivity());

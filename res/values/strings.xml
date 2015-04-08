@@ -30,4 +30,13 @@
         <item>Nov</item>
         <item>Dec</item>
     </string-array>
+    <string name="mean">Recommended to reduce body weight - a BMI of less than 25, waist circumference of less than
+        102cm in men, in women less than 88cm
+    </string>
+    <string name="weight">Recommended to reduce body weight - a BMI of less than 25, waist circumference of less than
+        102cm in men, in women less than 88cm
+    </string>
+    <string name="instruction">To take at least two BP measurements, in the sitting position, spaced 1-2 min apart, and
+        additional measurements if the first two are quite different. Consider the average BP if deemed approriate
+    </string>
 </resources>

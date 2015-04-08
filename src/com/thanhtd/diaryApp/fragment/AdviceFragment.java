@@ -18,6 +18,7 @@ public class AdviceFragment extends Fragment
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {
         View view = inflater.inflate(R.layout.advice_layout, container, false);
+        getActivity().findViewById(R.id.main_ivGraph).setVisibility(View.GONE);
         view.findViewById(R.id.learn_more_instruction).setOnClickListener(new View.OnClickListener()
         {
             @Override

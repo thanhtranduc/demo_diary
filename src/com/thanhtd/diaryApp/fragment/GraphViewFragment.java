@@ -96,13 +96,30 @@ public class GraphViewFragment extends Fragment
                 }
             }
         });
+        setupGraghView(graph);
+        setupGraghView(graphPulse);
 
         series.setColor(Color.RED);
+        series.setTitle("Diastolic");
         series2.setColor(Color.BLUE);
+        series2.setTitle("Systolic");
         series3.setColor(Color.GREEN);
+        series3.setTitle("Pulse");
         graph.addSeries(series);
         graph.addSeries(series2);
         graphPulse.addSeries(series3);
         return view;
+    }
+
+    private void setupGraghView(GraphView graph)
+    {
+        graph.getLegendRenderer().setVisible(true);
+
+        graph.getGridLabelRenderer().setVerticalLabelsVisible(true);
+        graph.getGridLabelRenderer().setHorizontalLabelsVisible(true);
+
+        graph.getGridLabelRenderer().setGridColor(Color.BLACK);
+        graph.getGridLabelRenderer().setHorizontalLabelsColor(Color.BLACK);
+        graph.getGridLabelRenderer().setVerticalLabelsColor(Color.BLACK);
     }
 }

@@ -3,6 +3,7 @@ package com.thanhtd.diaryApp;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.widget.DrawerLayout;
@@ -100,6 +101,8 @@ public class DiaryApp extends FragmentActivity
                                 @Override
                                 public void onClick(DialogInterface dialog, int which)
                                 {
+                                    Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=com.facebook.katana"));
+                                    startActivity(browserIntent);
                                     dialog.dismiss();
                                 }
                             })
