@@ -8,7 +8,6 @@ import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import com.thanhtd.diaryApp.AddDiaryLog;
-import com.thanhtd.diaryApp.EditDiaryDialogFragment;
 import com.thanhtd.diaryApp.R;
 import com.thanhtd.diaryApp.adapter.Item;
 import com.thanhtd.diaryApp.adapter.ListAdapter;

@@ -1,4 +1,4 @@
-package com.thanhtd.diaryApp;
+package com.thanhtd.diaryApp.fragment;
 
 import android.app.DialogFragment;
 import android.content.Intent;
@@ -9,6 +9,9 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.CheckBox;
 import android.widget.TextView;
+import com.thanhtd.diaryApp.AddDiaryLog;
+import com.thanhtd.diaryApp.DiaryApp;
+import com.thanhtd.diaryApp.R;
 import com.thanhtd.diaryApp.data.DatabaseHelper;
 import com.thanhtd.diaryApp.data.model.ItemModel;
 

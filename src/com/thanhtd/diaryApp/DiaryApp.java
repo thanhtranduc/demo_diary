@@ -25,7 +25,7 @@ public class DiaryApp extends FragmentActivity
     private MaterialMenuView materialMenuView;
     private ListView materialMenu;
     private DrawerLayout drawerLayout;
-    MainFragment mainFragment;
+    public MainFragment mainFragment;
     TextView tvTitle;
 
     @Override
