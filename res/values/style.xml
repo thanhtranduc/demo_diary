@@ -37,7 +37,7 @@
 
     </style>
 
-    <style name="color_check">
-        <item name="my_color">@color/blue</item>
-    </style>
+    <!--<style name="color_check">-->
+    <!--<item name="myColor">@color/blue</item>-->
+    <!--</style>-->
 </resources>

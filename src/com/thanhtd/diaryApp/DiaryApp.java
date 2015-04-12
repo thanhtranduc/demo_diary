@@ -16,6 +16,7 @@ import com.thanhtd.diaryApp.adapter.MenuListAdapter;
 import com.thanhtd.diaryApp.fragment.AdviceFragment;
 import com.thanhtd.diaryApp.fragment.GraphViewFragment;
 import com.thanhtd.diaryApp.fragment.MainFragment;
+import com.thanhtd.diaryApp.fragment.ReminderAlarmDialogFragment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -118,6 +119,10 @@ public class DiaryApp extends FragmentActivity
                 else if (position == 4)
                 {
                     //reminders
+//                    getSupportFragmentManager().beginTransaction().replace(R.id.main_frameLayout, new ReminderAlarmDialogFragment()).commit();
+//                    getSupportFragmentManager().executePendingTransactions();
+                    ReminderAlarmDialogFragment reminderAlarmDialogFragment = new ReminderAlarmDialogFragment();
+                    reminderAlarmDialogFragment.show(getFragmentManager(), "reminder");
                 }
                 else if (position == 5)
                 {
