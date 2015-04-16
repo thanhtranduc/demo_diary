@@ -123,7 +123,7 @@ public class AddDiaryLog extends FragmentActivity
                 npPulse.setValue(Integer.parseInt(itemModel.getPulse()));
 
                 final Date time = new Date(itemModel.getTime());
-                DateFormat formatter = new SimpleDateFormat("hh:mm a");
+                DateFormat formatter = new SimpleDateFormat("hh:mm");
                 tvTime.setText(formatter.format(time));
 
 

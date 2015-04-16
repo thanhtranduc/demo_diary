@@ -8,6 +8,7 @@ import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import com.thanhtd.diaryApp.AddDiaryLog;
+import com.thanhtd.diaryApp.ExcelUtil;
 import com.thanhtd.diaryApp.R;
 import com.thanhtd.diaryApp.adapter.Item;
 import com.thanhtd.diaryApp.adapter.ListAdapter;
@@ -38,6 +39,15 @@ public class MainFragment extends Fragment
         getActivity().findViewById(R.id.main_ivGraph).setVisibility(View.VISIBLE);
         final DatabaseHelper databaseHelper = new DatabaseHelper(getActivity(), "diary.db");
         SingletonHolder.getInstance().add(databaseHelper);
+        try
+        {
+            List<ItemModel> itemModels = databaseHelper.getDaoItem().queryForAll();
+            ExcelUtil.exportToExcel(itemModels);
+        }
+        catch (SQLException e)
+        {
+            e.printStackTrace();
+        }
         adapter = new ListAdapter(getActivity());
         lvDiary = (ListView) view.findViewById(R.id.main_lvDiary);
 
