@@ -24,11 +24,11 @@ public class ExcelUtil
 {
     public static void exportToExcel(List<ItemModel> itemModels)
     {
-        final String fileName = "TodoList.xls";
+        final String fileName = "reportDiaryApp.xls";
 
         //Saving file in external storage
         File sdCard = Environment.getExternalStorageDirectory();
-        File directory = new File(sdCard.getAbsolutePath() + "/javatechig.todo");
+        File directory = new File(sdCard.getAbsolutePath() + "/BrianSmithReport");
 
         //create directory if not exist
         if (!directory.isDirectory())
@@ -48,7 +48,6 @@ public class ExcelUtil
             workbook = Workbook.createWorkbook(file, wbSettings);
             //Excel sheet name. 0 represents first sheet
             WritableSheet sheet = workbook.createSheet("ReportDiaryApp", 0);
-            sheet.setColumnView(1000, 1000);
             try
             {
 
