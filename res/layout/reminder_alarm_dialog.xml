@@ -42,69 +42,67 @@
         </NumberPicker>
     </LinearLayout>
 
-    <RelativeLayout android:layout_width="wrap_content" android:layout_height="wrap_content">
+    <LinearLayout android:layout_width="match_parent"
+                  android:layout_height="wrap_content"
+                  android:orientation="horizontal"
+                  android:weightSum="10">
+        <LinearLayout android:layout_width="match_parent"
+                      android:layout_height="wrap_content"
+                      android:orientation="vertical"
+                      android:layout_weight="5">
+            <CheckBox android:layout_width="wrap_content"
+                      android:layout_height="wrap_content"
+                      android:id="@+id/reminder_alarmCbMonday"
+                      android:text="Monday"
+                      android:textSize="@dimen/textSize"
+                      android:textColor="@color/black"/>
+            <CheckBox android:layout_width="wrap_content"
+                      android:layout_height="wrap_content"
+                      android:id="@+id/reminder_alarmCbTue"
+                      android:text="Tuesday"
+                      android:textSize="@dimen/textSize"
+                      android:textColor="@color/black"/>
+            <CheckBox android:layout_width="wrap_content"
+                      android:layout_height="wrap_content"
+                      android:id="@+id/reminder_alarmCbWeds"
+                      android:text="Wednesday"
+                      android:textSize="@dimen/textSize"
+                      android:textColor="@color/black"/>
+            <CheckBox android:layout_width="wrap_content"
+                      android:layout_height="wrap_content"
+                      android:id="@+id/reminder_alarmCbThu"
+                      android:text="Thursday"
+                      android:textSize="@dimen/textSize"
+                      android:textColor="@color/black"/>
+        </LinearLayout>
 
-        <CheckBox android:layout_width="wrap_content"
-                  android:layout_height="wrap_content"
-                  android:id="@+id/reminder_alarmCbMonday"
-                  android:text="Monday"
-                  android:button="@drawable/checkbo_background"
-                  android:textSize="30dp"
-                  android:textColor="@color/black"/>
-        <CheckBox android:layout_width="wrap_content"
-                  android:layout_height="wrap_content"
-                  android:id="@+id/reminder_alarmCbTue"
-                  android:layout_below="@id/reminder_alarmCbMonday"
-                  android:text="Tuesday"
-                  android:button="@drawable/checkbo_background"
-                  android:textSize="30dp"
-                  android:textColor="@color/black"/>
-        <CheckBox android:layout_width="wrap_content"
-                  android:layout_height="wrap_content"
-                  android:id="@+id/reminder_alarmCbWeds"
-                  android:layout_below="@id/reminder_alarmCbTue"
-                  android:text="Wednesday"
-                  android:button="@drawable/checkbo_background"
-                  android:textSize="30dp"
-                  android:textColor="@color/black"/>
-        <CheckBox android:layout_width="wrap_content"
-                  android:layout_height="wrap_content"
-                  android:id="@+id/reminder_alarmCbThu"
-                  android:layout_below="@id/reminder_alarmCbWeds"
-                  android:text="Thursday"
-                  android:button="@drawable/checkbo_background"
-                  android:textSize="30dp"
-                  android:textColor="@color/black"/>
+        <LinearLayout android:layout_width="match_parent"
+                      android:layout_height="match_parent"
+                      android:orientation="vertical"
+                      android:layout_weight="5">
+            <CheckBox android:layout_width="wrap_content"
+                      android:layout_height="wrap_content"
+                      android:id="@+id/reminder_alarmCbFriday"
+                      android:text="Friday"
+                      android:textSize="@dimen/textSize"
+                      android:textColor="@color/black"/>
+            <CheckBox android:layout_width="wrap_content"
+                      android:layout_height="wrap_content"
+                      android:id="@+id/reminder_alarmCbSat"
+                      android:text="Saturday"
+                      android:textSize="@dimen/textSize"
+                      android:textColor="@color/black"/>
 
-        <CheckBox android:layout_width="wrap_content"
-                  android:layout_height="wrap_content"
-                  android:id="@+id/reminder_alarmCbFriday"
-                  android:text="Friday"
-                  android:layout_marginLeft="220dp"
-                  android:layout_alignParentTop="true"
-                  android:button="@drawable/checkbo_background"
-                  android:textSize="30dp"
-                  android:textColor="@color/black"/>
-        <CheckBox android:layout_width="wrap_content"
-                  android:layout_height="wrap_content"
-                  android:id="@+id/reminder_alarmCbSat"
-                  android:layout_marginLeft="220dp"
-                  android:layout_below="@id/reminder_alarmCbFriday"
-                  android:text="Saturday"
-                  android:button="@drawable/checkbo_background"
-                  android:textSize="30dp"
-                  android:textColor="@color/black"/>
+            <CheckBox android:layout_width="wrap_content"
+                      android:layout_height="wrap_content"
+                      android:id="@+id/reminder_alarmCbSunday"
+                      android:text="Sunday"
+                      android:checked="true"
+                      android:textSize="@dimen/textSize"
+                      android:textColor="@color/black"/>
 
-        <CheckBox android:layout_width="wrap_content"
-                  android:layout_height="wrap_content"
-                  android:id="@+id/reminder_alarmCbSunday"
-                  android:layout_below="@id/reminder_alarmCbSat"
-                  android:text="Sunday"
-                  android:layout_marginLeft="220dp"
-                  android:button="@drawable/checkbo_background"
-                  android:textSize="30dp"
-                  android:textColor="@color/black"/>
-    </RelativeLayout>
+        </LinearLayout>
+    </LinearLayout>
 
     <RelativeLayout
             android:layout_width="match_parent"
@@ -113,7 +111,7 @@
         <Button android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/reminder_alarm_btCancel"
-                android:textSize="40dp"
+                android:textSize="20dp"
                 android:layout_marginLeft="20dp"
                 android:textColor="@color/black"
                 android:text="Cancel"/>
@@ -122,7 +120,7 @@
                 android:id="@+id/reminder_alarm_btSave"
                 android:paddingLeft="30dp"
                 android:paddingRight="30dp"
-                android:textSize="40dp"
+                android:textSize="20dp"
                 android:layout_marginRight="20dp"
                 android:textColor="@color/black"
                 android:layout_alignParentRight="true"
