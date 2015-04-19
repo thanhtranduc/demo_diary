@@ -29,6 +29,7 @@ public class GraphViewFragment extends Fragment
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {
+        getActivity().findViewById(R.id.main_tvHintAdd).setVisibility(View.GONE);
         View view = inflater.inflate(R.layout.graph_view_fragment, container, false);
         final DatabaseHelper databaseHelper = new DatabaseHelper(getActivity(), "diary.db");
         List<ItemModel> itemModels = null;

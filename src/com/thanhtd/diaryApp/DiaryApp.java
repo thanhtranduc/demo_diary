@@ -8,7 +8,10 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.widget.DrawerLayout;
 import android.view.View;
-import android.widget.*;
+import android.widget.ExpandableListView;
+import android.widget.ImageButton;
+import android.widget.ImageView;
+import android.widget.TextView;
 import com.example.material.MaterialMenuDrawable;
 import com.example.material.MaterialMenuView;
 import com.thanhtd.diaryApp.adapter.MenuItem;
@@ -24,7 +27,7 @@ import java.util.List;
 public class DiaryApp extends FragmentActivity
 {
     private MaterialMenuView materialMenuView;
-    private ListView materialMenu;
+    private ExpandableListView materialMenu;
     private DrawerLayout drawerLayout;
     public MainFragment mainFragment;
     TextView tvTitle;
@@ -47,7 +50,7 @@ public class DiaryApp extends FragmentActivity
         });
         tvTitle.setText("BP");
         drawerLayout = (DrawerLayout) findViewById(R.id.main_drawer_layout);
-        materialMenu = (ListView) findViewById(R.id.slider_list);
+        materialMenu = (ExpandableListView) findViewById(R.id.slider_list);
         ImageButton btAdd = (ImageButton) findViewById(R.id.main_ivAddDiary);
         materialMenuView = (MaterialMenuView) findViewById(R.id.main_material_menu_button);
         materialMenuView.setOnClickListener(new View.OnClickListener()
@@ -69,12 +72,12 @@ public class DiaryApp extends FragmentActivity
         });
 
         setupMenu(materialMenu);
-        materialMenu.setOnItemClickListener(new AdapterView.OnItemClickListener()
+        materialMenu.setOnGroupClickListener(new ExpandableListView.OnGroupClickListener()
         {
             @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id)
+            public boolean onGroupClick(ExpandableListView parent, View v, int groupPosition, long id)
             {
-                if (position == 0)
+                if (groupPosition == 0)
                 {
                     drawerLayout.closeDrawer(materialMenu);
                     materialMenuView.animatePressedState(intToState(0));
@@ -82,7 +85,7 @@ public class DiaryApp extends FragmentActivity
                     getSupportFragmentManager().beginTransaction().replace(R.id.main_frameLayout, new MainFragment()).commit();
                     getSupportFragmentManager().executePendingTransactions();
                 }
-                else if (position == 1)
+                else if (groupPosition == 1)
                 {
                     //fragment advices;
                     tvTitle.setText("Advices β");
@@ -91,7 +94,7 @@ public class DiaryApp extends FragmentActivity
                     getSupportFragmentManager().beginTransaction().replace(R.id.main_frameLayout, new AdviceFragment()).commit();
                     getSupportFragmentManager().executePendingTransactions();
                 }
-                else if (position == 2 || position == 3)
+                else if (groupPosition == 2 || groupPosition == 3)
                 {
                     new AlertDialog.Builder(DiaryApp.this)
                             .setTitle("Notify")
@@ -116,22 +119,52 @@ public class DiaryApp extends FragmentActivity
                                 }
                             }).show();
                 }
-                else if (position == 4)
+                else if (groupPosition == 4)
                 {
-                    //reminders
-//                    getSupportFragmentManager().beginTransaction().replace(R.id.main_frameLayout, new ReminderAlarmDialogFragment()).commit();
-//                    getSupportFragmentManager().executePendingTransactions();
                     ReminderAlarmDialogFragment reminderAlarmDialogFragment = new ReminderAlarmDialogFragment();
                     reminderAlarmDialogFragment.show(getFragmentManager(), "reminder");
                 }
-                else if (position == 5)
+                else if (groupPosition == 5)
                 {
-                    //settings
                 }
-                else if (position == 6)
+                else if (groupPosition == 6)
                 {
-                    //rate
+                    Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=com.facebook.katana"));
+                    startActivity(browserIntent);
                 }
+                return false;
+            }
+        });
+        materialMenu.setOnChildClickListener(new ExpandableListView.OnChildClickListener()
+        {
+            @Override
+            public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id)
+            {
+                if (groupPosition == 5 && childPosition == 0)
+                {
+                    String yourWebsiteToHelp = "https://www.google.com.vn";
+                    Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(yourWebsiteToHelp));
+                    startActivity(browserIntent);
+                }
+                else if (groupPosition == 5 && childPosition == 1)
+                {
+                    String yourWebsiteToAbout = "https://www.google.com.vn";
+                    Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(yourWebsiteToAbout));
+                    startActivity(browserIntent);
+                }
+                else if (groupPosition == 5 && childPosition == 2)
+                {
+                    //todo where is share?
+                }
+                if (groupPosition == 5 && childPosition == 3)
+                {
+                    Intent intent = new Intent(Intent.ACTION_SEND);
+                    intent.setType("text/plain");
+                    intent.putExtra(Intent.EXTRA_EMAIL, "emailaddress@emailaddress.com");
+                    startActivity(Intent.createChooser(intent, "Send Email"));
+                    return true;
+                }
+                return true;
             }
         });
         btAdd.setOnClickListener(new View.OnClickListener()
@@ -149,7 +182,7 @@ public class DiaryApp extends FragmentActivity
         getSupportFragmentManager().executePendingTransactions();
     }
 
-    private void setupMenu(ListView materialMenu)
+    private void setupMenu(ExpandableListView materialMenu)
     {
         MenuItem BP = new MenuItem("BP", R.drawable.ic_action_heart);
         MenuItem advises = new MenuItem("Advises", R.drawable.ic_action_accept);
@@ -157,6 +190,11 @@ public class DiaryApp extends FragmentActivity
         MenuItem app1 = new MenuItem("App 1", -1);
         MenuItem app2 = new MenuItem("App 2", -1);
         MenuItem setting = new MenuItem("Settings", R.drawable.ic_action_settings);
+        setting.getChild().add(new MenuItem("Help", R.drawable.icon_favorite_active));
+        setting.getChild().add(new MenuItem("About Us", R.drawable.icon_favorite_active));
+        setting.getChild().add(new MenuItem("Share App", R.drawable.icon_favorite_active));
+        setting.getChild().add(new MenuItem("Contact Us", R.drawable.icon_favorite_active));
+        MenuItem rateUs = new MenuItem("Rate Us", -1);
         List<MenuItem> groups = new ArrayList<MenuItem>();
         groups.add(BP);
         groups.add(advises);
@@ -164,6 +202,7 @@ public class DiaryApp extends FragmentActivity
         groups.add(app2);
         groups.add(reminders);
         groups.add(setting);
+        groups.add(rateUs);
         materialMenu.setAdapter(new MenuListAdapter(groups, DiaryApp.this));
     }
 

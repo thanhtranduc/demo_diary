@@ -64,6 +64,10 @@ public class MainFragment extends Fragment
         {
             getActivity().findViewById(R.id.main_tvHintAdd).setVisibility(View.GONE);
         }
+        else
+        {
+            getActivity().findViewById(R.id.main_tvHintAdd).setVisibility(View.VISIBLE);
+        }
         groups = new ArrayList<Item>();
         for (ItemModel itemModel : list)
         {

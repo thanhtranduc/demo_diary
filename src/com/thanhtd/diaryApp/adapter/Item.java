@@ -2,6 +2,9 @@ package com.thanhtd.diaryApp.adapter;
 
 import com.thanhtd.diaryApp.data.model.ItemModel;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by a on 09/02/2015.
  */
@@ -18,6 +21,8 @@ public class Item
     private Long date;
     private boolean isCardiac = false;
     private String comment;
+    List<Item> child = new ArrayList<Item>();
+
 
     public Item(ItemModel itemModel)
     {
@@ -153,5 +158,15 @@ public class Item
     public void setCardiac(boolean isCardiac)
     {
         this.isCardiac = isCardiac;
+    }
+
+    public List<Item> getChild()
+    {
+        return child;
+    }
+
+    public void setChild(List<Item> child)
+    {
+        this.child = child;
     }
 }
